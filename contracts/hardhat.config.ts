@@ -21,13 +21,13 @@ if (!polygonApiKey) {
 const config: HardhatUserConfig = {
   solidity: '0.8.18',
   defaultNetwork: 'hardhat',
-  etherscan: {
-    apiKey: {
-      mainnet: etherscanApiKey,
-      sepolia: etherscanApiKey,
-      polygonMumbai: polygonApiKey,
-    },
-  },
+  // etherscan: {
+  //   apiKey: {
+  //     mainnet: etherscanApiKey,
+  //     sepolia: etherscanApiKey,
+  //     polygonMumbai: polygonApiKey,
+  //   },
+  // },
   networks: {
     hardhat: {
       chainId: 31337,
@@ -36,16 +36,16 @@ const config: HardhatUserConfig = {
       chainId: 31337,
       url: 'http://127.0.0.1:8545',
     },
-    sepolia: {
-      chainId: 11155111,
-      url: 'https://rpc.sepolia.org/',
-      accounts: [deployerKey as string],
-    },
-    mumbai: {
-      chainId: 80001,
-      url: 'https://rpc-mumbai.maticvigil.com/',
-      accounts: [deployerKey as string],
-    },
+    // sepolia: {
+    //   chainId: 11155111,
+    //   url: 'https://rpc.sepolia.org/',
+    //   accounts: [deployerKey as string],
+    // },
+    // mumbai: {
+    //   chainId: 80001,
+    //   url: 'https://rpc-mumbai.maticvigil.com/',
+    //   accounts: [deployerKey as string],
+    // },
   },
 }
 

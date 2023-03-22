@@ -13,3 +13,4 @@ const theme = extendTheme(withDefaultColorScheme({ colorScheme: THEME_COLOR_SCHE
 export function ChakraProvider(props: Props) {
   return <ChakraUiProvider theme={theme}>{props.children}</ChakraUiProvider>
 }
+//

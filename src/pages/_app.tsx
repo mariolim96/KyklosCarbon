@@ -4,6 +4,8 @@ import { Web3Provider } from 'providers/Web3'
 import { ChakraProvider } from 'providers/Chakra'
 import { useIsMounted } from 'hooks/useIsMounted'
 import { Seo } from 'components/layout/Seo'
+import 'styles/globals.css'
+import DefaultLayout from 'components/templates/newLayout'
 
 export default function App({ Component, pageProps }: AppProps) {
   const isMounted = useIsMounted()
@@ -13,9 +15,9 @@ export default function App({ Component, pageProps }: AppProps) {
       <Seo />
       <Web3Provider>
         {isMounted && (
-          <Layout>
+          <DefaultLayout>
             <Component {...pageProps} />
-          </Layout>
+          </DefaultLayout>
         )}
       </Web3Provider>
     </ChakraProvider>
