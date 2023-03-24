@@ -1,39 +1,26 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable no-constant-condition */
-/* eslint-disable @typescript-eslint/strict-boolean-expressions */
-"use client";
-import React from "react";
-import {
-  flexRender,
-  getCoreRowModel,
-  useReactTable,
-  type ColumnDef,
-} from "@tanstack/react-table";
+'use client'
+import React from 'react'
+import { flexRender, getCoreRowModel, useReactTable, type ColumnDef } from '@tanstack/react-table'
 interface Props {
-  defaultData?: unknown[];
-  columns?: Array<ColumnDef<unknown, unknown>>;
-  loading?: boolean;
+  defaultData?: unknown[]
+  columns?: Array<ColumnDef<unknown, unknown>>
+  loading?: boolean
 }
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function Table({ columns = [], defaultData = [], loading }: Props) {
-  const Headers = ["Name", "Symbol", "Balance", "Price", "Value"];
+  const Headers = ['Name', 'Symbol', 'Balance', 'Price', 'Value']
   const Rows = [
-    ["GSC", "GSC", "10000", "0.1", "1000"],
-    ["CRT", "CRT", "10000", "0.1", "1000"],
-    ["ETH", "ETH", "10000", "0.1", "1000"],
-    ["DAI", "DAI", "10000", "0.1", "1000"],
-  ];
-  const [data] = React.useState<unknown[]>(() => [...defaultData]);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const rerender = React.useReducer(() => ({}), {})[1];
+    ['GSC', 'GSC', '10000', '0.1', '1000'],
+    ['CRT', 'CRT', '10000', '0.1', '1000'],
+    ['ETH', 'ETH', '10000', '0.1', '1000'],
+    ['DAI', 'DAI', '10000', '0.1', '1000'],
+  ]
+  const [data] = React.useState<unknown[]>(() => [...defaultData])
+  const rerender = React.useReducer(() => ({}), {})[1]
   const table = useReactTable({
     columns,
     data: data.length ? data : Rows,
     getCoreRowModel: getCoreRowModel<unknown>(),
-  });
+  })
   return (
     <>
       {columns.length !== 0 ? (
@@ -44,12 +31,7 @@ function Table({ columns = [], defaultData = [], loading }: Props) {
                 <tr key={headerGroup.id}>
                   {headerGroup.headers.map((header) => (
                     <th key={header.id} colSpan={header.colSpan}>
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
+                      {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
                     </th>
                   ))}
                 </tr>
@@ -64,12 +46,7 @@ function Table({ columns = [], defaultData = [], loading }: Props) {
                 table.getRowModel().rows.map((row) => (
                   <tr key={row.id}>
                     {row.getVisibleCells().map((cell) => (
-                      <td key={cell.id}>
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext()
-                        )}
-                      </td>
+                      <td key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</td>
                     ))}
                   </tr>
                 ))
@@ -100,7 +77,7 @@ function Table({ columns = [], defaultData = [], loading }: Props) {
         </div>
       )}
     </>
-  );
+  )
 }
 
-export default Table;
+export default Table
