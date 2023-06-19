@@ -6,7 +6,7 @@ import ThemeChanger from 'components/atoms/ThemeChanger'
 function NavBar() {
   return (
     <div className="flex justify-end">
-      <PassportScore />
+      {/* <PassportScore /> */}
       <ConnectKitButton />
       <ThemeChanger />
     </div>
