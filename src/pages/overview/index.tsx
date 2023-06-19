@@ -1,7 +1,7 @@
 import { type NextPage } from 'next'
 import Head from 'next/head'
 
-import Input from '../components/atoms/Input'
+import Input from '../../components/atoms/Input'
 import Button from 'components/atoms/Button'
 import ThemeChanger from 'components/atoms/ThemeChanger'
 import Select from 'components/atoms/Select'
