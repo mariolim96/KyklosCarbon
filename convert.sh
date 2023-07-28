@@ -1,9 +1,13 @@
 #!/bin/bash
 
-folder_path="/c/Users/mario/OneDrive/Desktop/kyklos2/contracts"
+# folder_path="/c/Users/mario/OneDrive/Desktop/kyklos2/contracts"
 
-# Find all .ts and .tsx files recursively
-files=$(find "$folder_path" -type f \( -name "*.ts" -o -name "*.tsx" -o -name "*.tsx" \))
+# # Find all .ts and .tsx files recursively
+# files=$(find "$folder_path" -type f \( -name "*.ts" -o -name "*.tsx" -o -name "*.tsx" \))
+# folder_path="/c/Users/mario/OneDrive/Desktop/kyklos2/src"
+
+# # Find all .ts and .tsx files recursively
+# files=$(find "$folder_path" -type f \( -name "*.ts" -o -name "*.tsx" \))
 
 # Loop through each file
 for file in $files; do
