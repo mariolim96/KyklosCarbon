@@ -1,3 +1,90 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Color Scheme:
+
+color-scheme: light;: This sets the color scheme to "light" for the personalized theme.
+Color Values:
+
+--pf: Primary color for foreground elements.
+--sf: Secondary color for foreground elements.
+--af: Accent color for foreground elements.
+--nf: Neutral color for foreground elements.
+--b2: Background color level 2 (slightly lighter than primary background).
+--b3: Background color level 3 (slightly lighter than secondary background).
+--in: Input field color.
+--su: Success color.
+--wa: Warning color.
+--er: Error color.
+--bc: Border color.
+--ac: Active color.
+--nc: Neutral color (typically used for text).
+--inc: Inverted input field color.
+--suc: Inverted success color.
+--wac: Inverted warning color.
+--erc: Inverted error color.
+Rounded Corners:
+
+--rounded-box: The radius for rounded corners on boxes.
+--rounded-btn: The radius for rounded corners on buttons.
+--rounded-badge: The radius for rounded corners on badges.
+Animations:
+
+--animation-btn: The duration of button animations.
+--animation-input: The duration of input animations.
+Button Styling:
+
+--btn-text-case: Text case transformation for button text (uppercase).
+--btn-focus-scale: The scale value applied when buttons are focused (used for visual feedback).
+--border-btn: The border width for buttons.
+Tab Styling:
+
+--tab-border: The border width for tabs.
+--tab-radius: The radius for rounded corners on tabs.
+Color Palette:
+
+--p: Palette color.
+--pc: Palette color contrast (a different shade or tone).
+--s: Secondary palette color.
+--sc: Secondary palette color contrast (a different shade or tone).
+--a: Accent palette color.
+--n: Neutral palette color.
+--b1: Background color level 1 (primary background). */
+
+[data-theme='mytheme'] {
+  --p: 122 75% 45%; /* hsl(122, 75%, 45%) */
+  --pf: 122 75% 38%; /* hsl(122, 75%, 38%) */
+  --sf: 45 70% 38%; /* hsl(45, 70%, 38%) */
+  --af: 215 85% 48%; /* hsl(215, 85%, 48%) */
+  --nf: 29 20% 68%; /* hsl(29, 20%, 68%) */
+  --b2: 220 14% 89%; /* hsl(220, 14%, 89%) */
+  --b3: 220 14% 82%; /* hsl(220, 14%, 82%) */
+  --bc: 220 0% 18%; /* hsl(220, 0%, 18%) */
+  --pc: 111 40% 11%; /* hsl(111, 40%, 11%) */
+  --sc: 42 44% 11%; /* hsl(42, 44%, 11%) */
+  --ac: 228 87% 93%; /* hsl(228, 87%, 93%) */
+  --nc: 29 5% 15%; /* hsl(29, 5%, 15%) */
+  --inc: 255 6% 16%; /* hsl(255, 6%, 16%) */
+  --suc: 152 31% 13%; /* hsl(152, 31%, 13%) */
+  --wac: 39 47% 13%; /* hsl(39, 47%, 13%) */
+  --erc: 14 100% 90%; /* hsl(14, 100%, 90%) */
+  --rounded-box: 1rem;
+  --rounded-btn: 0.5rem;
+  --rounded-badge: 1.9rem;
+  --animation-btn: 0.25s;
+  --animation-input: 0.2s;
+  --btn-text-case: uppercase;
+  --btn-focus-scale: 0.95;
+  --border-btn: 1px;
+  --tab-border: 1px;
+  --tab-radius: 0.5rem;
+  --s: 45 70% 45%; /* hsl(45, 70%, 45%) */
+  --a: 215 85% 55%; /* hsl(215, 85%, 55%) */
+  --n: 29 20% 75%; /* hsl(29, 20%, 75%) */
+  --b1: 220 14% 96%; /* hsl(220, 14%, 96%) */
+  --in: 255 36% 83%; /* hsl(255, 36%, 83%) */
+  --su: 158 64% 52%; /* hsl(158, 64%, 52%) */
+  --wa: 43 96% 56%; /* hsl(43, 96%, 56%) */
+  --er: 0 85% 50%; /* hsl(0, 85%, 50%) */
+}

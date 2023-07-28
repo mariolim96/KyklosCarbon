@@ -1,8 +1,8 @@
 import { ThemingProps } from '@chakra-ui/react'
-import { mainnet, sepolia, polygon, optimism, arbitrum } from '@wagmi/chains'
+import { mainnet, sepolia, polygon, optimism, arbitrum, hardhat } from '@wagmi/chains'
 
-export const SITE_NAME = 'Nexth'
-export const SITE_DESCRIPTION = 'Next.js + Ethereum starter kit'
+export const SITE_NAME = 'Kyklos'
+export const SITE_DESCRIPTION = 'carbon removal framework'
 export const SITE_URL = 'https://nexth.vercel.app'
 
 export const THEME_INITIAL_COLOR = 'system'
@@ -11,10 +11,10 @@ export const THEME_CONFIG = {
   initialColorMode: THEME_INITIAL_COLOR,
 }
 
-export const SOCIAL_TWITTER = 'wslyvh'
-export const SOCIAL_GITHUB = 'wslyvh/nexth'
+export const SOCIAL_TWITTER = 'kyklos'
+export const SOCIAL_GITHUB = 'kyklos'
 
-export const ETH_CHAINS = [mainnet, sepolia, polygon, optimism, arbitrum]
+export const ETH_CHAINS = [mainnet, sepolia, polygon, optimism, arbitrum, hardhat]
 
 export const SERVER_SESSION_SETTINGS = {
   cookieName: SITE_NAME,

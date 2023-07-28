@@ -4,6 +4,9 @@ import { themeChange } from 'theme-change'
 import Select from './Select'
 
 const Themes = [
+  'mytheme',
+  'carbon-removal',
+  'personalized',
   'default',
   'light',
   'dark',

@@ -53,7 +53,7 @@ const Sidebar = (props: Props) => {
           }
         }}>
         <Image alt="logo" src={logo} className={`h-10 w-10 cursor-pointer duration-500 ${open ? 'rotate-[360deg]' : ''}`} />
-        <h1 className={`origin-right text-xl font-medium duration-200 ease-in-out ${!open ? 'scale-0' : ''}`}>GreenCoin</h1>
+        <h1 className={`origin-right text-2xl font-medium duration-200 ease-in-out ${!open ? 'scale-0' : ''}`}>Kyklos</h1>
       </div>
       <ul className="pt-6">
         {menu.map((item, index) => (

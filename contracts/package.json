@@ -5,7 +5,7 @@
   "scripts": {
     "node": "npx hardhat node",
     "build": "hardhat compile",
-    "deploy": "npx hardhat run scripts/deployV1.ts",
+    "deploy": "npx hardhat run scripts/deployV1.ts --network localhost",
     "deploy:nft": "npx hardhat run scripts/nft.ts",
     "coverage": "hardhat coverage",
     "test": "REPORT_GAS=true hardhat test"
