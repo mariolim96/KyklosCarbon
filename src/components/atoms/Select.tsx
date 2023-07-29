@@ -44,7 +44,7 @@ const Select = ({ options, selected, onChange, disabled, intent, size, color, ..
         intent,
         size,
         color,
-      })} appearance-none bg-gray-200 rounded-md px-4 py-2 text-gray-800 leading-tight focus:outline-none focus:bg-white focus:border-blue-500`}
+      })}`}
       disabled={disabled}
       onChange={onChange}
       {...rest}

@@ -5,6 +5,7 @@ import Input from '../components/atoms/Input'
 import Button from 'components/atoms/Button'
 import ThemeChanger from 'components/atoms/ThemeChanger'
 import Select from 'components/atoms/Select'
+import Select2 from 'components/atoms/select2'
 import Table from 'components/atoms/Table'
 import NavBar2 from 'components/organism/Navbar'
 
@@ -20,6 +21,7 @@ const Home: NextPage = () => {
       </Head>
       {/* <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c]"> */}
       <NavBar2></NavBar2>
+      <Select2 />
       <ThemeChanger />
       <Input value="hello" />
       <Button>hello</Button>

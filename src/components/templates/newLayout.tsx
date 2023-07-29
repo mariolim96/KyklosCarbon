@@ -1,5 +1,5 @@
 import React from 'react'
-import { NavBar as Nav, Sidebar as Side } from 'components/organism'
+import Organism from 'components/organism'
 
 interface Props {
   Sidebar?: JSX.Element
@@ -7,7 +7,7 @@ interface Props {
   children: JSX.Element
 }
 
-const DefaultLayout = ({ Sidebar = <Side />, Navbar = <Nav />, children }: Props) => (
+const DefaultLayout = ({ Sidebar = <Organism.Sidebar />, Navbar = <Organism.NavBar />, children }: Props) => (
   <div className="flex h-screen overflow-hidden">
     {Sidebar}
     <div className="mt-1 h-screen w-full flex-col justify-end self-start overflow-hidden pt-8">

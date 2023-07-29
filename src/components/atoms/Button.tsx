@@ -13,6 +13,8 @@ const ButtonStyle = cva('btn shadow-md', {
       error: 'btn-error',
       ghost: 'btn-ghost',
       link: 'btn-link',
+      square: 'btn-square',
+      circle: 'btn-circle',
     },
     shadow: {
       xs: 'shadow-xs',

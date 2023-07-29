@@ -5,6 +5,7 @@ interface Props {
   defaultData?: unknown[]
   columns?: Array<ColumnDef<unknown, unknown>>
   loading?: boolean
+  title?: string
 }
 function Table({ columns = [], defaultData = [], loading }: Props) {
   const Headers = ['Name', 'Symbol', 'Balance', 'Price', 'Value']
@@ -23,6 +24,9 @@ function Table({ columns = [], defaultData = [], loading }: Props) {
   })
   return (
     <>
+      {/* title  on the left */}
+      <h1 className="text-2xl text-nf">My carbon asset</h1>
+
       {columns.length !== 0 ? (
         <div className="overflow-auto">
           <table className="table w-full">

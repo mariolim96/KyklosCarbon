@@ -26,6 +26,7 @@
     "@chakra-ui/react": "2.4.4",
     "@emotion/react": "^11",
     "@emotion/styled": "^11",
+    "@headlessui/react": "^1.7.16",
     "@next/font": "13.1.1",
     "@tanstack/react-table": "^8.7.9",
     "class-variance-authority": "^0.4.0",

@@ -7,6 +7,7 @@ import Loader from './Loader'
 import Select from './Select'
 import Table from './Table'
 import ThemeChanger from './ThemeChanger'
+import Stats from './Stats'
 
-const atoms = { Badge, Button, Carousel, Icon, Link, Loader, Select, Table, ThemeChanger }
+const atoms = { Stats, Badge, Button, Carousel, Icon, Link, Loader, Select, Table, ThemeChanger }
 export default atoms

@@ -1,15 +1,13 @@
 import React from 'react'
-import logo from 'style/images/logo.png'
-import eth from 'style/images/eth.svg'
+import logo from 'assets/icons/logo.png'
 import Image, { type StaticImageData } from 'next/image'
 
-export type logos = 'logo' | 'eth'
+export type logos = 'logo'
 type iconMapper = {
   [key in logos]: StaticImageData
 }
 const Icons: iconMapper = {
   logo,
-  eth,
 }
 
 interface Props {
