@@ -1,4 +1,3 @@
-'use client'
 import React from 'react'
 import { BsChevronRight, BsBoxArrowInDown } from 'react-icons/bs'
 import logo from '../../assets/icons/logo.png'
@@ -11,6 +10,7 @@ import Image from 'next/image'
 const style = {
   menuClassNameIcon: 'w-6 h-6',
 }
+
 interface Props {
   menu?: Array<{
     title: string
@@ -37,9 +37,9 @@ const Sidebar = (props: Props) => {
     navigate.push(href)
   }
   return (
-    <div className={` ${open ? 'w-72' : 'w-20 '} relative h-screen  p-5 pt-8  shadow-md shadow-first-700 duration-300`}>
+    <div className={` ${open ? 'w-72' : 'w-20 '} relative h-screen  p-5 pt-8  shadow-md shadow-nf duration-300`}>
       <BsChevronRight
-        className={`absolute -right-3 top-10 h-6 w-6 cursor-pointer rounded-full border-2 border-white  p-1 ${!open ? 'rotate-180' : ''}`}
+        className={`absolute -right-3 top-10 h-6 w-6 cursor-pointer rounded-full border-2 border-pc p-1 ${!open ? 'rotate-180' : ''}`}
         onClick={() => setOpen(!open)}
       />
       <div
@@ -65,9 +65,9 @@ const Sidebar = (props: Props) => {
                 if (e.key === 'Enter') onButtonClick(index, item.href)
               }}
               role="button"
-              className={`mt-2 flex cursor-pointer items-center gap-x-4 whitespace-nowrap rounded-md p-2 text-lg hover:bg-first-0 ${
-                index === selected ? 'bg-first-0' : ''
-              } transition-bg-color shadow-inner shadow-first-900 duration-300 ease-in-out`}>
+              className={`mt-2 flex cursor-pointer items-center gap-x-4 whitespace-nowrap rounded-md p-2 text-lg hover:bg-nf ${
+                index === selected ? 'bg-nf' : ''
+              } transition-bg-color shadow shadow-nf duration-300 ease-in-out`}>
               <div>{item.src}</div>
               <h1 className={`${!open ? 'scale-0' : ''} origin-left duration-200 ease-in-out`}>{item.title}</h1>
             </div>

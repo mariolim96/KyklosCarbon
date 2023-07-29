@@ -2,7 +2,7 @@
 import React from 'react'
 import { cva, type VariantProps } from 'class-variance-authority'
 
-const ButtonStyle = cva('btn', {
+const ButtonStyle = cva('btn shadow-md', {
   variants: {
     intent: {
       primary: 'btn-primary',
@@ -13,7 +13,22 @@ const ButtonStyle = cva('btn', {
       error: 'btn-error',
       ghost: 'btn-ghost',
       link: 'btn-link',
-      outline: 'btn-outline',
+    },
+    shadow: {
+      xs: 'shadow-xs',
+      md: 'shadow-md',
+      lg: 'shadow-lg',
+      xl: 'shadow-xl',
+      '2xl': 'shadow-2xl',
+    },
+    shadowType: {
+      inner: 'shadow-inner',
+      inherit: 'shadow-inherit',
+      none: 'shadow-none',
+    },
+    outline: {
+      true: 'btn-outline',
+      false: '',
     },
     size: {
       xs: 'btn-xs',

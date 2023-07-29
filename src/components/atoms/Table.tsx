@@ -25,12 +25,12 @@ function Table({ columns = [], defaultData = [], loading }: Props) {
     <>
       {columns.length !== 0 ? (
         <div className="overflow-auto">
-          <table className="table">
+          <table className="table w-full">
             <thead>
               {table.getHeaderGroups().map((headerGroup) => (
-                <tr key={headerGroup.id}>
+                <tr key={headerGroup.id} className="bg-pf h-12 ">
                   {headerGroup.headers.map((header) => (
-                    <th key={header.id} colSpan={header.colSpan}>
+                    <th key={header.id} colSpan={header.colSpan} className="px-4 py-2 text-left text-pc text-xl font-medium">
                       {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
                     </th>
                   ))}
@@ -40,13 +40,17 @@ function Table({ columns = [], defaultData = [], loading }: Props) {
             <tbody>
               {table.getRowModel().rows.length === 0 ? (
                 <tr>
-                  <td>No Data</td>
+                  <td colSpan={Headers.length} className="px-4 py-2 text-center">
+                    No Data
+                  </td>
                 </tr>
               ) : (
-                table.getRowModel().rows.map((row) => (
-                  <tr key={row.id}>
+                table.getRowModel().rows.map((row, rowIndex) => (
+                  <tr key={row.id} className={rowIndex % 2 === 0 ? 'bg-base-1' : 'bg-base-2'}>
                     {row.getVisibleCells().map((cell) => (
-                      <td key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</td>
+                      <td key={cell.id} className="px-4 py-2 text-pc">
+                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                      </td>
                     ))}
                   </tr>
                 ))
@@ -55,20 +59,24 @@ function Table({ columns = [], defaultData = [], loading }: Props) {
           </table>
         </div>
       ) : (
-        <div className="overflow-auto">
-          <table className="table">
-            <thead className="">
-              <tr>
+        <div className="overflow-auto shadow-xl rounded-lg">
+          <table className="table w-full rounded-lg overflow-hidden">
+            <thead>
+              <tr className="bg-nf h-12">
                 {Headers.map((header, i) => (
-                  <th key={i}>{header}</th>
+                  <th key={i} className="px-4 py-2 text-left text-nc  text-lg font-medium">
+                    {header}
+                  </th>
                 ))}
               </tr>
             </thead>
             <tbody>
-              {Rows.map((row, i) => (
-                <tr key={i}>
-                  {row.map((cell, j) => (
-                    <td key={`${i}-${j}`}>{cell}</td>
+              {Rows.map((row, rowIndex) => (
+                <tr key={rowIndex} className={rowIndex % 2 === 0 ? 'bg-base-1' : 'bg-base-2'}>
+                  {row.map((cell, colIndex) => (
+                    <td key={`${rowIndex}-${colIndex}`} className="px-4 py-2 text-pc">
+                      {cell}
+                    </td>
                   ))}
                 </tr>
               ))}

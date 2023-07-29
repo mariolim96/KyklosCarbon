@@ -38,9 +38,11 @@ const Themes = [
   'coffee',
   'winter',
 ]
+interface Props {
+  type?: string
+}
 
-const ThemeChanger = () => {
-  // eslint-disable-next-line react-hooks/rules-of-hooks
+const ThemeChanger = (props: Props) => {
   useEffect(() => {
     themeChange(false)
   })

@@ -40,11 +40,11 @@ interface Props extends VariantProps<typeof SelectStyle> {
 const Select = ({ options, selected, onChange, disabled, intent, size, color, ...rest }: Props & React.HTMLAttributes<HTMLSelectElement>) => {
   return (
     <select
-      className={SelectStyle({
+      className={`${SelectStyle({
         intent,
         size,
         color,
-      })}
+      })} appearance-none bg-gray-200 rounded-md px-4 py-2 text-gray-800 leading-tight focus:outline-none focus:bg-white focus:border-blue-500`}
       disabled={disabled}
       onChange={onChange}
       {...rest}
@@ -59,5 +59,4 @@ const Select = ({ options, selected, onChange, disabled, intent, size, color, ..
     </select>
   )
 }
-
 export default Select

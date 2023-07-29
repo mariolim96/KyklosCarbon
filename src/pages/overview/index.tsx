@@ -19,9 +19,12 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className="mx-4 my-4 flex items-center justify-between">
-        <h1>My carbon asset</h1>
+        <h1 className="text-2xl text-nf">My carbon asset</h1>
         <div className="flex justify-between gap-2">
-          <Button>refresh</Button>
+          {/* button secondary */}
+          <Button intent="secondary" outline>
+            refresh
+          </Button>
           <Button>Start bridging</Button>
         </div>
       </div>

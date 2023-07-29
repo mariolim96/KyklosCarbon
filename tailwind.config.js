@@ -4,32 +4,31 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        mytheme: {
-          p: 'var(--p)', // primary
-          pf: 'var(--pf)', // primary faded
-          sf: 'var(--sf)', // secondary faded
-          af: 'hsl(215, 85%, 48%)', // accent faded
-          nf: 'hsl(29, 20%, 68%)', // neutral faded
-          b1: 'hsl(220, 14%, 96%)', // base 1
-          b2: 'hsl(220, 14%, 89%)', // base 2
-          b3: 'hsl(220, 14%, 82%)', // base 3
-          bc: 'hsl(220, 0%, 18%)', // base contrast
-          pc: 'hsl(111, 40%, 11%)', // primary contrast
-          sc: 'hsl(42, 44%, 11%)', // secondary contrast
-          ac: 'hsl(228, 87%, 93%)', // accent contrast
-          nc: 'hsl(29, 5%, 15%)', // neutral contrast
-          inc: 'hsl(255, 6%, 16%)', // info contrast
-          suc: 'hsl(152, 31%, 13%)', // success contrast
-          wac: 'hsl(39, 47%, 13%)', // warning contrast
-          erc: 'hsl(14, 100%, 90%)', // error contrast
-          s: 'hsl(45, 70%, 45%)', // secondary
-          a: ' hsl(215, 85%, 55%) ', // accent
-          n: ' hsl(29, 20%, 75%) ', // neutral
-          in: ' hsl(255, 36%, 83%) ', // info
-          su: ' hsl(158, 64%, 52%) ', // success
-          wa: ' hsl(43, 96%, 56%) ', // warning
-          er: 'hsl(0, 85%, 50%) ', // error
-        },
+        p: 'hsl(var(--p))', // primary
+        pf: 'hsl(var(--pf))', // primary faded  hsl(122, 75%, 45%)
+        // darker value of pf
+        sf: 'hsl(var(--sf))', // secondary faded  hsl(45, 70%, 38%)
+        af: 'hsl(var(--af))', // accent faded hsl(215, 85%, 48%)
+        nf: 'hsl(var(--nf))', // neutral faded hsl(29, 20%, 68%)
+        b1: 'hsl(var(--b1))', // base 1 hsl(220, 14%, 96%)
+        b2: 'hsl(var(--b2))', // base 2 hsl(220, 14%, 89%)
+        b3: 'hsl(var(--b3))', // base 3 hsl(220, 14%, 82%)
+        bc: 'hsl(var(--bc))', // base contrast hsl(220, 0%, 18%)
+        pc: 'hsl(var(--pc))', // primary contrast hsl(111, 40%, 11%)
+        sc: 'hsl(var(--sc))', // secondary contrast hsl(42, 44%, 11%)
+        ac: 'hsl(var(--ac))', // accent contrast hsl(228, 87%, 93%)
+        nc: 'hsl(var(--nc))', // neutral contrast hsl(29, 5%, 15%)
+        inc: 'hsl(var(--inc))', // info contrast hsl(255, 6%, 16%)
+        suc: 'hsl(var(--suc))', // success contrast hsl(152, 31%, 13%)
+        wac: 'hsl(var(--wac))', // warning contrast hsl(39, 47%, 13%)
+        erc: 'hsl(var(--erc))', // error contrast hsl(14, 100%, 90%)
+        s: 'hsl(var(--s))', // secondary hsl(45, 70%, 45%)
+        a: ' hsl(var(--a)) ', // accent hsl(215, 85%, 55%)
+        n: ' hsl(var(--n)) ', // neutral hsl(29, 20%, 75%)
+        in: ' hsl(var(--in)) ', // info hsl(255, 36%, 83%)
+        su: ' hsl(var(--su)) ', // success hsl(158, 64%, 52%)
+        wa: ' hsl(var(--wa)) ', // warning hsl(43, 96%, 56%)
+        er: 'hsl(var(--er)) ', // error hsl(0, 85%, 50%)
       },
     },
     // Other theme configurations...
@@ -92,5 +91,5 @@ module.exports = {
       'winter',
     ],
   },
-  plugins: [require('@tailwindcss/typography'), require('daisyui')],
+  plugins: [require('@tailwindcss/typography'), require('daisyui'), require('@mertasan/tailwindcss-variables')],
 }
