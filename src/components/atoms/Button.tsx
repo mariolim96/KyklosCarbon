@@ -78,15 +78,31 @@ const ButtonStyle = cva('btn shadow-md', {
   },
 })
 
-interface ButtonProps extends VariantProps<typeof ButtonStyle> {
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement>, Omit<VariantProps<typeof ButtonStyle>, 'disabled'> {
   children?: React.ReactNode
   type?: 'button' | 'submit' | 'reset'
   onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void
 }
 
-function Button({ children, onClick, type = 'button', ...rest }: ButtonProps) {
+function Button(props: ButtonProps) {
+  const { children, onClick, type = 'button', intent, size, wide, rounded, disabled, circle, square, active, loading, className, ...rest } = props
   return (
-    <button type={type} onClick={onClick} className={ButtonStyle({ ...rest })}>
+    <button
+      type={type}
+      onClick={onClick}
+      className={`${ButtonStyle({
+        intent,
+        size,
+        wide,
+        rounded,
+        disabled,
+        circle,
+        square,
+        active,
+        loading,
+        className,
+      })}`}
+      {...rest}>
       {children}
     </button>
   )

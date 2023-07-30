@@ -59,10 +59,9 @@ module.exports = {
           primary: '#1dc922',
           // 'primary-focus': '#1dc922',
           'primary-content': '#142711',
-
           secondary: '#f5c73d',
-          // 'secondary-focus': '#c39b22'
-          // 'secondary-content': '#f35',
+          'secondary-focus': '#f3bd1b',
+          'secondary-content': '#2e2614',
 
           accent: '#2b7cee',
           'accent-focus': '#1269e2',
@@ -77,13 +76,14 @@ module.exports = {
           'base-300': '#d1d5db',
           'base-content': '	#2e2e2e',
           info: '#CBC3E3',
-          // 'info-content': '#28262b',
+          'info-content': '#28262b',
           success: '#36D399',
           'success-content': '#172b22',
           warning: '#e49d3a',
-          // 'warning-content': '#1a202c',
+          'warning-content': '#2f2314',
           error: '#ec1313',
           'error-content': '#ffd8cc',
+
           '--rounded-box': '1rem', // border radius rounded-box utility class, used in card and other large boxes
           '--rounded-btn': '0.5rem', // border radius rounded-btn utility class, used in buttons and similar element
           '--rounded-badge': '1.9rem', // border radius rounded-badge utility class, used in badges and similar

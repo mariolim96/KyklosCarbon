@@ -33,7 +33,7 @@ const InputStyle = cva('input', {
 type labelPosition = 'top' | 'bottom'
 type labelJustify = 'left' | 'right'
 
-interface Props extends VariantProps<typeof InputStyle> {
+interface Props extends VariantProps<typeof InputStyle>, Omit<React.ButtonHTMLAttributes<HTMLInputElement>, 'color'> {
   placeholder?: string
   value?: string
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
@@ -43,7 +43,21 @@ interface Props extends VariantProps<typeof InputStyle> {
   labelJustify?: labelJustify
 }
 
-function Input({ placeholder, value, onChange, disabled, label, labelPosition = 'top', labelJustify = 'left', ...rest }: Props) {
+function Input(props: Props) {
+  const {
+    placeholder,
+    value,
+    onChange,
+    disabled,
+    label,
+    labelPosition = 'top',
+    labelJustify = 'left',
+    intent,
+    size,
+    color,
+    className,
+    ...rest
+  } = props
   const [inputValue, setInputValue] = useState(value)
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value)
@@ -59,10 +73,11 @@ function Input({ placeholder, value, onChange, disabled, label, labelPosition = 
       <input
         type="text"
         placeholder={placeholder}
-        className={InputStyle({ ...rest })}
+        className={InputStyle({ intent, size, color, className })}
         disabled={disabled}
         value={inputValue}
         onChange={handleChange}
+        {...rest}
       />
       {labelPosition === 'bottom' && (
         <label className="label">

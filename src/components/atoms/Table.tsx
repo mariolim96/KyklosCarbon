@@ -7,7 +7,7 @@ interface Props {
   loading?: boolean
   title?: string
 }
-function Table({ columns = [], defaultData = [], loading }: Props) {
+function Table({ columns = [], defaultData = [], loading, title }: Props) {
   const Headers = ['Name', 'Symbol', 'Balance', 'Price', 'Value']
   const Rows = [
     ['GSC', 'GSC', '10000', '0.1', '1000'],
@@ -24,12 +24,10 @@ function Table({ columns = [], defaultData = [], loading }: Props) {
   })
   return (
     <>
-      {/* title  on the left */}
-      <h1 className="text-2xl text-nf">My carbon asset</h1>
-
+      <h2 className="">{title ?? 'My carbon asset'}</h2>
       {columns.length !== 0 ? (
         <div className="overflow-auto">
-          <table className="table w-full">
+          <table className="table w-full table-zebra">
             <thead>
               {table.getHeaderGroups().map((headerGroup) => (
                 <tr key={headerGroup.id} className="bg-pf h-12 ">
@@ -64,7 +62,7 @@ function Table({ columns = [], defaultData = [], loading }: Props) {
         </div>
       ) : (
         <div className="overflow-auto shadow-xl rounded-lg">
-          <table className="table w-full rounded-lg overflow-hidden">
+          <table className="table w-full rounded-lg overflow-hidden  table-zebra">
             <thead>
               <tr className="bg-nf h-12">
                 {Headers.map((header, i) => (

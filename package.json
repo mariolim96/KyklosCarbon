@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint --fix",
     "prettier": "prettier",
-    "wagmi": "wagmi generate"
+    "wagmi": "wagmi generate",
+    "server": "npx json-graphql-server verra-db.js --p 3001 "
   },
   "husky": {
     "hooks": {
