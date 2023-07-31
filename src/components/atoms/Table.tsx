@@ -24,7 +24,7 @@ function Table({ columns = [], defaultData = [], loading, title }: Props) {
   })
   return (
     <>
-      <h2 className="">{title ?? 'My carbon asset'}</h2>
+      <h2 className="mx-1">{title ?? 'My carbon asset'}</h2>
       {columns.length !== 0 ? (
         <div className="overflow-auto">
           <table className="table w-full table-zebra">
@@ -48,7 +48,7 @@ function Table({ columns = [], defaultData = [], loading, title }: Props) {
                 </tr>
               ) : (
                 table.getRowModel().rows.map((row, rowIndex) => (
-                  <tr key={row.id} className={rowIndex % 2 === 0 ? 'bg-base-1' : 'bg-base-2'}>
+                  <tr key={row.id}>
                     {row.getVisibleCells().map((cell) => (
                       <td key={cell.id} className="px-4 py-2 text-pc">
                         {flexRender(cell.column.columnDef.cell, cell.getContext())}
@@ -66,7 +66,7 @@ function Table({ columns = [], defaultData = [], loading, title }: Props) {
             <thead>
               <tr className="bg-nf h-12">
                 {Headers.map((header, i) => (
-                  <th key={i} className="px-4 py-2 text-left text-nc  text-lg font-medium">
+                  <th key={i} className="px-4 py-2 text-left   text-lg font-medium">
                     {header}
                   </th>
                 ))}
@@ -74,9 +74,9 @@ function Table({ columns = [], defaultData = [], loading, title }: Props) {
             </thead>
             <tbody>
               {Rows.map((row, rowIndex) => (
-                <tr key={rowIndex} className={rowIndex % 2 === 0 ? 'bg-base-1' : 'bg-base-2'}>
+                <tr key={rowIndex}>
                   {row.map((cell, colIndex) => (
-                    <td key={`${rowIndex}-${colIndex}`} className="px-4 py-2 text-pc">
+                    <td key={`${rowIndex}-${colIndex}`} className="px-4 py-2">
                       {cell}
                     </td>
                   ))}

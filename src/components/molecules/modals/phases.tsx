@@ -1,6 +1,6 @@
-import React, { useContext, useEffect } from 'react'
+import React from 'react'
 import { IoAlert } from 'react-icons/io5'
-import { Input, Select2, Carousel } from 'components/atoms'
+import { Input, Carousel } from 'components/atoms'
 import { useMultiStep } from 'hooks'
 
 interface Props {
@@ -28,12 +28,6 @@ function Phases({ step }: Props) {
         <div>
           <h2 className="pl-1 text-xl font-medium">Provider</h2>
           <h3 className=" text-l pl-1 font-normal text-first-100">Select the registry from which you are bridging the credits from</h3>
-          <Select2
-            values={[
-              { value: 'Verra', label: 'Verra' },
-              { value: 'Gold Standard', label: 'Gold Standard' },
-            ]}
-            onChange={(e: any) => setValues?.({ ...values, provider: e.label })}></Select2>
         </div>
       </div>
       <div className="m-4 duration-1000">

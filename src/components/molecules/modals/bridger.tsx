@@ -1,5 +1,4 @@
 // import React, { useContext, useEffect } from 'react'
-// import NiceModal, { useModal } from '@ebay/nice-modal-react'
 // import { Button } from 'components/atoms'
 // import * as yup from 'yup'
 // import Phases from './Phases'
@@ -112,11 +111,10 @@
 // create a modal similar to the one in the example
 
 import React, { useContext, useEffect } from 'react'
-import NiceModal, { useModal } from '@ebay/nice-modal-react'
 import { Button, Modal } from 'components/atoms'
 // import * as yup from 'yup'
 import Phases from './phases'
-import { useMultiStep, MultiStepProvider } from 'hooks'
+import { useMultiStep, MultiStepProvider, useModal } from 'hooks'
 
 const Bridger = () => {
   const phases = ['1 initiate', '2 retire', '3 bridge', '4 submit']
@@ -138,19 +136,20 @@ const Bridger = () => {
 
   const stepCloseButtonLabel = ['Close', 'Back', 'Back', 'Back']
   const stepNextButtonLabel = ['Initiate batch', 'I have my serial', 'Confirm serial', 'Submit']
+  const { closeModal, isModalOpen, modalName, setModal } = useModal()
   return (
-    <MultiStepProvider.Provider value={{ values, setValues, step, setStep }}>
-      <Modal>
+    <Modal>
+      <MultiStepProvider.Provider value={{ values, setValues, step, setStep }}>
         hello
         <Button
           intent={'primary'}
           onClick={() => {
-            debugger
+            closeModal()
           }}>
           close
         </Button>
-      </Modal>
-    </MultiStepProvider.Provider>
+      </MultiStepProvider.Provider>
+    </Modal>
   )
 }
 
