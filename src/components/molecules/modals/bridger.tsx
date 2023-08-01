@@ -1,3 +1,4 @@
+'use client'
 // import React, { useContext, useEffect } from 'react'
 // import { Button } from 'components/atoms'
 // import * as yup from 'yup'
@@ -114,12 +115,18 @@ import React, { useContext, useEffect } from 'react'
 import { Button, Modal } from 'components/atoms'
 // import * as yup from 'yup'
 import Phases from './phases'
-import { useMultiStep, MultiStepProvider, useModal } from 'hooks'
+import { useMultiStep, MultiStepProvider } from 'hooks'
+import { useAtom } from 'jotai'
+import { closeModalAtom } from 'hooks/modalAtoms'
 
 const Bridger = () => {
   const phases = ['1 initiate', '2 retire', '3 bridge', '4 submit']
   const [step, setStep] = React.useState(0)
   const [values, setValues] = React.useState<{ [k: string]: any }>({ provider: 'verra' })
+  const stepCloseButtonLabel = ['Close', 'Back', 'Back', 'Back']
+  const stepNextButtonLabel = ['Initiate batch', 'I have my serial', 'Confirm serial', 'Submit']
+  const [, closeModal] = useAtom(closeModalAtom)
+
   // const { data: mintedTokenId, isLoading, write, isSuccess, ...rest } = useMintBatch()
   // const batchEvent = useBatchEvent('BatchMinted')
   // const updateBatch = useUpdateUserBatch(values.tokenId, values.serialNumber, ethers.utils.parseEther(values.quantity), values.uri)
@@ -134,9 +141,6 @@ const Bridger = () => {
   //     uri: yup.string().required(),
   //   })
 
-  const stepCloseButtonLabel = ['Close', 'Back', 'Back', 'Back']
-  const stepNextButtonLabel = ['Initiate batch', 'I have my serial', 'Confirm serial', 'Submit']
-  const { closeModal, isModalOpen, modalName, setModal } = useModal()
   return (
     <Modal>
       <MultiStepProvider.Provider value={{ values, setValues, step, setStep }}>

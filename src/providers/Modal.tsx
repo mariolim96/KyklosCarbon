@@ -1,9 +1,16 @@
+'use client'
+import { modalNameAtom, Modals } from 'hooks/modalAtoms'
+import { useAtom } from 'jotai'
 import React from 'react'
-import { useModal } from '../hooks/useModal'
 
 const ModalProvider = () => {
-  const { currentModal } = useModal()
-  return <>{currentModal}</>
+  const [modalName] = useAtom(modalNameAtom)
+
+  const RenderModal = () => {
+    const CurrentModal = Modals[modalName]
+    return <CurrentModal />
+  }
+  return <>{<RenderModal />}</>
 }
 
 export default ModalProvider

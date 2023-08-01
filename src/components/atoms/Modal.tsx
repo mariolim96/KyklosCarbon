@@ -1,6 +1,9 @@
+'use client'
 import React from 'react'
 import cn from 'classnames'
-import { useModal } from '../../hooks/useModal'
+// import { useModal } from '../../hooks/useModal'
+import { isModalOpenAtom } from 'hooks/modalAtoms'
+import { useAtom } from 'jotai'
 interface Props {
   id?: string
   children?: React.ReactNode
@@ -10,7 +13,7 @@ interface Props {
 }
 
 const Modal = ({ children, overlayClassName, modalClassName, closeOnOverlayClick, id }: Props) => {
-  const { isModalOpen } = useModal()
+  const [isModalOpen] = useAtom(isModalOpenAtom)
   const overlayClass = cn(`modal  ${overlayClassName}`, {
     'modal-open': isModalOpen,
   })
