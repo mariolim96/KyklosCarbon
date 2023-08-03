@@ -1,6 +1,8 @@
 'use client'
 import React from 'react'
 import { cva, type VariantProps } from 'class-variance-authority'
+import { IconName, DynamicIconName, StaticImgName } from './Icon'
+import atoms from '../atoms'
 
 const ButtonStyle = cva('btn shadow-md', {
   variants: {
@@ -15,6 +17,8 @@ const ButtonStyle = cva('btn shadow-md', {
       link: 'btn-link',
       square: 'btn-square',
       circle: 'btn-circle',
+      neutral: 'btn-neutral',
+      glass: 'glass',
     },
     shadow: {
       xs: 'shadow-xs',
@@ -24,6 +28,7 @@ const ButtonStyle = cva('btn shadow-md', {
       '2xl': 'shadow-2xl',
     },
     shadowType: {
+      outer: 'shadow',
       inner: 'shadow-inner',
       inherit: 'shadow-inherit',
       none: 'shadow-none',
@@ -37,10 +42,8 @@ const ButtonStyle = cva('btn shadow-md', {
       sm: 'btn-sm',
       md: 'btn-md',
       lg: 'btn-lg',
-    },
-    wide: {
-      true: 'btn-wide',
-      false: '',
+      wide: 'btn-wide',
+      block: 'btn-block',
     },
     rounded: {
       true: 'btn-rounded',
@@ -70,22 +73,53 @@ const ButtonStyle = cva('btn shadow-md', {
   defaultVariants: {
     intent: 'primary',
     size: 'md',
-    wide: false,
     rounded: false,
     disabled: false,
     circle: false,
     square: false,
+    outline: false,
   },
 })
 
+type Icon = {
+  name: IconName
+  position?: 'left' | 'right'
+  type: 'static' | 'dynamic'
+  width?: number
+}
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement>, Omit<VariantProps<typeof ButtonStyle>, 'disabled'> {
   children?: React.ReactNode
   type?: 'button' | 'submit' | 'reset'
-  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void
+  icon?: Icon
 }
 
 function Button(props: ButtonProps) {
-  const { children, onClick, type = 'button', intent, size, wide, rounded, disabled, circle, square, active, loading, className, ...rest } = props
+  const {
+    children,
+    onClick,
+    type = 'button',
+    intent,
+    size,
+    rounded,
+    disabled,
+    circle,
+    square,
+    active,
+    loading,
+    className,
+    outline,
+    icon,
+    ...rest
+  } = props
+
+  const { StaticIcon, DynamicIcon } = atoms
+  const cIcon = icon ? (
+    icon.type === 'dynamic' ? (
+      <DynamicIcon name={icon.name as DynamicIconName} />
+    ) : (
+      <StaticIcon name={icon.name as StaticImgName} width={icon?.width ?? 10} />
+    )
+  ) : null
   return (
     <button
       type={type}
@@ -93,17 +127,19 @@ function Button(props: ButtonProps) {
       className={`${ButtonStyle({
         intent,
         size,
-        wide,
         rounded,
         disabled,
         circle,
         square,
         active,
         loading,
+        outline,
         className,
       })}`}
       {...rest}>
+      {(icon?.position ?? 'left') === 'left' && cIcon}
       {children}
+      {icon?.position === 'right' && cIcon}
     </button>
   )
 }

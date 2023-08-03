@@ -2,6 +2,7 @@
 pragma solidity 0.8.18;
 
 contract Registry {
+    // this are smart contract addresses
     address internal _carbonOffsetBatchesAddress;
     address internal _carbonProjectsAddress;
     address internal _carbonProjectVintagesAddress;
