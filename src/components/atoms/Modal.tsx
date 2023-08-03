@@ -20,7 +20,7 @@ const Modal = ({ children, overlayClassName, modalClassName, closeOnOverlayClick
 
   return (
     <dialog id={id} className={overlayClass}>
-      <div className={`modal-box ${modalClassName}`}>{children}</div>
+      <div className={`modal-box p-0 ${modalClassName ?? ''} `}>{children}</div>
       {closeOnOverlayClick && (
         <form method="dialog" className="modal-backdrop">
           <button>close</button>

@@ -11,8 +11,9 @@ import Stats from './Stats'
 import Input from './Input'
 import Modal from './Modal'
 import Select2 from './select2'
+import Stepper from './Stepper'
 
-const atoms = { Stats, Badge, Button, Carousel, Icon, Link, Loader, Select, Table, ThemeChanger, Input, Modal, Select2 }
+const atoms = { Stepper, Stats, Badge, Button, Carousel, ...Icon, Link, Loader, Select, Table, ThemeChanger, Input, Modal, Select2 }
 
 export default atoms
-export { Stats, Select2, Badge, Button, Carousel, Icon, Link, Loader, Select, Table, ThemeChanger, Input, Modal }
+export { Stepper, Stats, Select2, Badge, Button, Carousel, Icon, Link, Loader, Select, Table, ThemeChanger, Input, Modal }

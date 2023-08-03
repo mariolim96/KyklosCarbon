@@ -1,24 +1,64 @@
-import React, { useContext } from 'react'
+import { Dispatch, SetStateAction, useCallback, useMemo, useState } from 'react'
 
-interface MultiStepContext {
-  values: { [k: string]: any }
-  setValues: React.Dispatch<React.SetStateAction<{ [k: string]: any }>>
-  step: number
-  setStep: React.Dispatch<React.SetStateAction<number>>
+interface Helpers {
+  goToNextStep: () => void
+  goToPrevStep: () => void
+  reset: () => void
+  canGoToNextStep: boolean
+  canGoToPrevStep: boolean
+  setStep: Dispatch<SetStateAction<number>>
 }
-export const MultiStepProvider = React.createContext<MultiStepContext | null>(null)
 
-export const useMultiStep = (phases: number) => {
-  const contextStep = useContext(MultiStepProvider)
-  const canStepNext = contextStep?.step != null ? contextStep.step <= phases - 1 : false
-  const canStepBack = contextStep?.step != null ? contextStep.step > 0 : false
+type setStepCallbackType = (step: number | ((step: number) => number)) => void
 
-  return {
-    values: contextStep?.values,
-    setValues: contextStep?.setValues,
-    step: contextStep?.step,
-    setStep: contextStep?.setStep,
-    canStepNext,
-    canStepBack,
-  }
+export function useStep(maxStep: number, initialStep?: number): [number, Helpers] {
+  const [currentStep, setCurrentStep] = useState(initialStep ?? 1)
+
+  const canGoToNextStep = useMemo(() => currentStep + 1 <= maxStep, [currentStep, maxStep])
+
+  const canGoToPrevStep = useMemo(() => currentStep - 1 >= 1, [currentStep])
+
+  const setStep = useCallback<setStepCallbackType>(
+    (step) => {
+      // Allow value to be a function so we have the same API as useState
+      debugger
+      const newStep = step instanceof Function ? step(currentStep) : step
+
+      if (newStep >= (initialStep ?? 1) && newStep <= maxStep) {
+        setCurrentStep(newStep)
+        return
+      }
+
+      throw new Error('Step not valid')
+    },
+    [maxStep, currentStep, initialStep]
+  )
+
+  const goToNextStep = useCallback(() => {
+    if (canGoToNextStep) {
+      setCurrentStep((step) => step + 1)
+    }
+  }, [canGoToNextStep])
+
+  const goToPrevStep = useCallback(() => {
+    if (canGoToPrevStep) {
+      setCurrentStep((step) => step - 1)
+    }
+  }, [canGoToPrevStep])
+
+  const reset = useCallback(() => {
+    setCurrentStep(initialStep ?? 1)
+  }, [initialStep])
+
+  return [
+    currentStep,
+    {
+      goToNextStep,
+      goToPrevStep,
+      canGoToNextStep,
+      canGoToPrevStep,
+      setStep,
+      reset,
+    },
+  ]
 }

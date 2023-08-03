@@ -1,14 +1,81 @@
 module.exports = {
-  posts: [
-    { id: 1, title: 'Lorem Ipsum', views: 254, user_id: 123 },
-    { id: 2, title: 'Sic Dolor amet', views: 65, user_id: 456 },
+  //   struct NFTData {
+  //     uint256 projectVintageTokenId;
+  //     string serialNumber;
+  //     uint256 quantity;
+  //     RetirementStatus status;
+  //     string uri;
+  //     string[] comments;
+  //     address[] commentAuthors;
+  // }
+  NFTData: [
+    {
+      serialNumber: '0001',
+      quantity: 1000,
+      status: false,
+    },
+    {
+      serialNumber: '0002',
+      quantity: 1000,
+      status: false,
+    },
+    {
+      serialNumber: '0003',
+      quantity: 1000,
+      status: false,
+    },
   ],
-  users: [
-    { id: 123, name: 'John Doe' },
-    { id: 456, name: 'Jane Doe' },
-  ],
-  comments: [
-    { id: 987, post_id: 1, body: 'Consectetur adipiscing elit', date: new Date('2017-07-03') },
-    { id: 995, post_id: 1, body: 'Nam molestie pellentesque dui', date: new Date('2017-08-17') },
+  projects: [
+    {
+      projectId: '0001',
+      standard: 'VCS',
+      methodology: 'VM0001',
+      region: 'US',
+      storageMethod: 'US',
+      method: 'US',
+      emissionType: 'US',
+      category: 'US',
+      uri: 'US',
+      beneficiary: 'US',
+      vintageData: {
+        name: 'US',
+        startTime: 'US',
+        endTime: 'US',
+        projectTokenId: 'US',
+        totalVintageQuantity: 'US',
+        isCorsiaCompliant: 'US',
+        isCCPcompliant: 'US',
+        coBenefits: 'US',
+        correspAdjustment: 'US',
+        addittionalCertification: 'US',
+        uri: 'US',
+      },
+    },
   ],
 }
+// struct VintageData {
+//     string name;
+//     uint64 startTime; // UNIX timestamp
+//     uint64 endTime; // UNIX timestamp
+//     uint256 projectTokenId;
+//     uint64 totalVintageQuantity;
+//     bool isCorsiaCompliant;
+//     bool isCCPcompliant;
+//     string coBenefits;
+//     string correspAdjustment;
+//     string additionalCertification;
+//     string uri;
+// }
+
+// struct ProjectData {
+//   string projectId;
+//   string standard;
+//   string methodology;
+//   string region;
+//   string storageMethod;
+//   string method;
+//   string emissionType;
+//   string category;
+//   string uri;
+//   address beneficiary;
+// }

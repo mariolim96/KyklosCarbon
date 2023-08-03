@@ -27,6 +27,7 @@ contract NFTRetirementBatch is ERC721, ERC721Burnable, AccessControl {
         // string[] comments;
         // address[] commentAuthors;
     }
+
     mapping(uint256 => NFTData) public nftList;
 
     bytes32 public constant VERIFIER_ROLE = keccak256("VERIFIER_ROLE");

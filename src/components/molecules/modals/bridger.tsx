@@ -112,19 +112,20 @@
 // create a modal similar to the one in the example
 
 import React, { useContext, useEffect } from 'react'
-import { Button, Modal } from 'components/atoms'
+import { Button, Modal, Stepper } from 'components/atoms'
 // import * as yup from 'yup'
 import Phases from './phases'
-import { useMultiStep, MultiStepProvider } from 'hooks'
-import { useAtom } from 'jotai'
+import { useStep } from 'hooks/useMultistep'
+import { atom, useAtom } from 'jotai'
 import { closeModalAtom } from 'hooks/modalAtoms'
+
+export const bridgeValues = atom<{ [k: string]: any }>({ provider: 'verra' })
 
 const Bridger = () => {
   const phases = ['1 initiate', '2 retire', '3 bridge', '4 submit']
-  const [step, setStep] = React.useState(0)
-  const [values, setValues] = React.useState<{ [k: string]: any }>({ provider: 'verra' })
-  const stepCloseButtonLabel = ['Close', 'Back', 'Back', 'Back']
-  const stepNextButtonLabel = ['Initiate batch', 'I have my serial', 'Confirm serial', 'Submit']
+  const [step, helpers] = useStep(4, 0)
+  console.log('Bridger ~ step:', step)
+
   const [, closeModal] = useAtom(closeModalAtom)
 
   // const { data: mintedTokenId, isLoading, write, isSuccess, ...rest } = useMintBatch()
@@ -140,19 +141,16 @@ const Bridger = () => {
   //     'Beneficial owner': yup.string().required(),
   //     uri: yup.string().required(),
   //   })
+  // const Stepper = tw.div`flex h-16 justify-center rounded-t-lg bg-first-100 align-baseline `;
+  // const StepperElement = styled.div(({ active }: { active: boolean }) => [
+  //   tw`grid w-full place-content-center rounded-t-xl border-b-4 border-first-200 transition-all duration-500 ease-in`,
+  //   active && tw`border-b-amber-600`,
+  // ]);
 
   return (
-    <Modal>
-      <MultiStepProvider.Provider value={{ values, setValues, step, setStep }}>
-        hello
-        <Button
-          intent={'primary'}
-          onClick={() => {
-            closeModal()
-          }}>
-          close
-        </Button>
-      </MultiStepProvider.Provider>
+    <Modal modalClassName="max-w-[50%]">
+      <Stepper steps={phases} active={step} />
+      <Phases setStep={helpers.setStep} step={step} />
     </Modal>
   )
 }
