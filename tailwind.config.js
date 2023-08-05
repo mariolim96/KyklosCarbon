@@ -1,4 +1,8 @@
 /** @type {import('tailwindcss').Config} */
+// import getPalette from 'tailwindcss-palette-generator'
+// // const palette = getPalette({
+// //   pro: 'hsl(var(--p))',
+// // })
 module.exports = {
   content: ['./src/**/*.{js,ts,jsx,tsx}'],
   theme: {

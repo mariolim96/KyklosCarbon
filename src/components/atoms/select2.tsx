@@ -91,7 +91,7 @@ export default function MyListbox(props: Props) {
     option = (active: boolean) => `relative cursor-default select-none py-2 pl-10 pr-4 ${active ? 'bg-n text-nc' : 'text-bc'}`,
     allOptions = 'absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-b1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm',
   } = style || {}
-  const [selectedPerson, setSelectedPerson] = useState(options[0])
+  const [selectedPerson, setSelectedPerson] = useState<{ id: string | number; label: string }>({ id: 1, label: 'choose' })
 
   const onChange = (e: { id: string | number; label: string }) => {
     setSelectedPerson(e)

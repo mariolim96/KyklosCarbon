@@ -115,17 +115,19 @@ import React, { useContext, useEffect } from 'react'
 import { Button, Modal, Stepper } from 'components/atoms'
 // import * as yup from 'yup'
 import Phases from './phases'
-import { useMultiStep, MultiStepProvider } from 'hooks'
-import { useAtom } from 'jotai'
+import { useStep } from 'hooks'
+import { atom, useAtom } from 'jotai'
 import { closeModalAtom } from 'hooks/modalAtoms'
+
+export const bridgeValues = atom<{ [k: string]: any }>({ provider: 'verra' })
 
 const Bridger = () => {
   const phases = ['1 initiate', '2 retire', '3 bridge', '4 submit']
-  const [step, setStep] = React.useState(0)
-  console.log('step:', step)
-  const [values, setValues] = React.useState<{ [k: string]: any }>({ provider: 'verra' })
-  const stepCloseButtonLabel = ['Close', 'Back', 'Back', 'Back']
-  const stepNextButtonLabel = ['Initiate batch', 'I have my serial', 'Confirm serial', 'Submit']
+  const [step, helpers] = useStep(4, 0)
+  console.log('Bridger ~ step:', step)
+
+  // const stepCloseButtonLabel = ['Close', 'Back', 'Back', 'Back']
+  // const stepNextButtonLabel = ['Initiate batch', 'I have my serial', 'Confirm serial', 'Submit']
   const [, closeModal] = useAtom(closeModalAtom)
 
   // const { data: mintedTokenId, isLoading, write, isSuccess, ...rest } = useMintBatch()
@@ -148,25 +150,23 @@ const Bridger = () => {
   // ]);
 
   return (
-    <Modal modalClassName="max-w-[50%]">
-      <MultiStepProvider.Provider value={{ values, setValues, step, setStep }}>
-        <Stepper steps={phases} active={step} />
-        <Phases />
-        <Button
-          intent={'primary'}
-          onClick={() => {
-            setStep(step + 1)
-          }}>
-          step
-        </Button>
-        <Button
-          intent={'primary'}
-          onClick={() => {
-            closeModal()
-          }}>
-          close
-        </Button>
-      </MultiStepProvider.Provider>
+    <Modal modalClassName="max-w-[50%] w-[50%] overflow-hidden">
+      <Stepper steps={phases} active={step} />
+      <Phases setStep={helpers.setStep} step={step} />
+      {/* <Button
+        intent={'primary'}
+        onClick={() => {
+          helpers.setStep(step + 1)
+        }}>
+        step
+      </Button>
+      <Button
+        intent={'primary'}
+        onClick={() => {
+          closeModal()
+        }}>
+        close
+      </Button> */}
     </Modal>
   )
 }
