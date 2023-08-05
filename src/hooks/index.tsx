@@ -1,7 +1,8 @@
-import { useMultiStep, MultiStepProvider } from './useMultistep'
+import { useStep } from './useMultistep'
+import useToaster from './useToaster'
 const hooks = {
-  useMultiStep,
-  MultiStepProvider,
+  useStep,
+  useToaster,
 }
 export default hooks
-export { useMultiStep, MultiStepProvider }
+export { useStep, useToaster }

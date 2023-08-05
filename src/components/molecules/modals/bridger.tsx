@@ -115,7 +115,7 @@ import React, { useContext, useEffect } from 'react'
 import { Button, Modal, Stepper } from 'components/atoms'
 // import * as yup from 'yup'
 import Phases from './phases'
-import { useStep } from 'hooks/useMultistep'
+import { useStep } from 'hooks'
 import { atom, useAtom } from 'jotai'
 import { closeModalAtom } from 'hooks/modalAtoms'
 
@@ -126,6 +126,8 @@ const Bridger = () => {
   const [step, helpers] = useStep(4, 0)
   console.log('Bridger ~ step:', step)
 
+  // const stepCloseButtonLabel = ['Close', 'Back', 'Back', 'Back']
+  // const stepNextButtonLabel = ['Initiate batch', 'I have my serial', 'Confirm serial', 'Submit']
   const [, closeModal] = useAtom(closeModalAtom)
 
   // const { data: mintedTokenId, isLoading, write, isSuccess, ...rest } = useMintBatch()
@@ -148,9 +150,23 @@ const Bridger = () => {
   // ]);
 
   return (
-    <Modal modalClassName="max-w-[50%]">
+    <Modal modalClassName="max-w-[50%] w-[50%] overflow-hidden">
       <Stepper steps={phases} active={step} />
       <Phases setStep={helpers.setStep} step={step} />
+      {/* <Button
+        intent={'primary'}
+        onClick={() => {
+          helpers.setStep(step + 1)
+        }}>
+        step
+      </Button>
+      <Button
+        intent={'primary'}
+        onClick={() => {
+          closeModal()
+        }}>
+        close
+      </Button> */}
     </Modal>
   )
 }

@@ -9,6 +9,7 @@ interface Helpers {
   setStep: Dispatch<SetStateAction<number>>
 }
 
+// eslint-disable-next-line no-unused-vars
 type setStepCallbackType = (step: number | ((step: number) => number)) => void
 
 export function useStep(maxStep: number, initialStep?: number): [number, Helpers] {
@@ -21,7 +22,6 @@ export function useStep(maxStep: number, initialStep?: number): [number, Helpers
   const setStep = useCallback<setStepCallbackType>(
     (step) => {
       // Allow value to be a function so we have the same API as useState
-      debugger
       const newStep = step instanceof Function ? step(currentStep) : step
 
       if (newStep >= (initialStep ?? 1) && newStep <= maxStep) {
