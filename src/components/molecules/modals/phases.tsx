@@ -26,21 +26,6 @@ const styles = {
     background: '#6AC0FF',
   },
 }
-const styles = {
-  slide: {
-    minHeight: 100,
-    color: '#fff',
-  },
-  slide1: {
-    background: '#FEA900',
-  },
-  slide2: {
-    background: '#B3DC4A',
-  },
-  slide3: {
-    background: '#6AC0FF',
-  },
-}
 
 function Phases({ step, setStep }: Props) {
   const [values, setValues] = useAtom(bridgeValues)
@@ -77,35 +62,58 @@ function Phases({ step, setStep }: Props) {
         <div className="m-4 duration-1000 overflow-auto">
           <div className="flex gap-2">
             <div className="p-2 pt-3">
-              <div className="align-center text-l flex h-[25px] w-[25px] items-center justify-center rounded-[50%] bg-first-700 text-first-50 ">
-                1
-              </div>
+              <div className="align-center text-l flex h-[25px] w-[25px] items-center justify-center rounded-[50%] bg-info text-info-content ">1</div>
             </div>
             <div className="p-2">
-              <h1 className="text-2xl text-base-content">Retire credits with {values?.provider ?? 'chosen provider'}</h1>
+              <h1 className="text-xl font-bold text-base-content">Retirement</h1>
               <h2 className="text-l text-base-content opacity-70">
                 to bridge carbon credits you need to retire them. Head over to your verifier to retire you carbon credits.
               </h2>
-              <div className=" rounded-md border-2 border-base-200   p-2 shadow-lg  shadow-base-300">
-                {['Beneficial owner', 'quantity', 'uri', 'status'].map((item) => (
+              <div className=" rounded-md border-2 border-base-200  p-2 shadow-lg  shadow-base-300">
+                {['Beneficial owner', 'Tetirement reason', 'Retirement detail', 'status'].map((item) => (
                   <>
-                    <h2 className="text-sm tracking-wide text-base-content ">{item}</h2>
-                    <Input disabled onChange={(e) => setValues?.({ ...values, [item]: e.target.value })}></Input>
+                    <Input
+                      disabled
+                      className={'w-full mb-1'}
+                      label={item}
+                      onChange={(e) => setValues?.({ ...values, [item]: e.target.value })}></Input>
                   </>
                 ))}
               </div>
             </div>
           </div>
+          <div className="flex gap-2 mt-2">
+            <div className="p-2 pt-3">
+              <div className="align-center text-l flex h-[25px] w-[25px] items-center justify-center rounded-[50%] bg-info text-info-content ">2</div>
+            </div>
+            <div className="p-2">
+              <p className="text-base-content opacity-70">
+                After your successful retirement you will receive a unique <strong> serial number</strong> from the registry provider via e-mail which
+                contains the information of your retired carbon credit. It should have the following format: 0001-000001-000100-VCS-VCU-00:
+                VER-US-0003-01012020-31122020-1.
+              </p>
+            </div>
+          </div>
           <div className="flex gap-2">
-            <Button onClick={() => setStep?.(step ?? 0 - 1)}>Back</Button>
-            <Button onClick={() => setStep?.(step ?? 0 + 1)}>Next</Button>
+            <Button onClick={() => setStep(step - 1)}>Back</Button>
+            <Button onClick={() => setStep(step + 1)}>Next</Button>
           </div>
         </div>
-        <div key="2" style={Object.assign({}, styles.slide, styles.slide3)}>
-          slide n°3
+        <div className="m-4 duration-1000">
+          <h1 className="text-2xl">Bridge Retired credits</h1>
+          <h2 className="text-l text-base-content">Add serial number of the credits you want to bridge</h2>
+          <Input onChange={(e) => setValues?.({ ...values, serial: e.target.value })}></Input>
+          <div className="flex gap-2">
+            <Button onClick={() => setStep(step - 1)}>Back</Button>
+            <Button onClick={() => setStep(step + 1)}>Next</Button>
+          </div>
         </div>
-        <div key="3" style={Object.assign({}, styles.slide, styles.slide3)}>
-          slide n°3
+        <div>
+          <pre>{JSON.stringify(values, null, 2)}</pre>
+          <div className="flex gap-2">
+            <Button onClick={() => setStep(step - 1)}>Back</Button>
+            <Button onClick={() => setStep(step + 1)}>Next</Button>
+          </div>
         </div>
       </Carousel>
     </div>
@@ -113,12 +121,3 @@ function Phases({ step, setStep }: Props) {
 }
 
 export default Phases
-
-//   <div className="m-4 duration-1000">
-//     <h1 className="text-2xl">Bridge Retired credits</h1>
-//     <h2 className="text-l text-blue-300">Add serial number of the credits you want to bridge</h2>
-//     <Input onChange={(e) => setValues?.({ ...values, serial: e.target.value })}></Input>
-//   </div>
-//   <div>
-//     <pre>{JSON.stringify(values, null, 2)}</pre>
-//   </div>

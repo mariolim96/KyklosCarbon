@@ -111,8 +111,8 @@
 
 // create a modal similar to the one in the example
 
-import React, { useContext, useEffect } from 'react'
-import { Button, Modal, Stepper } from 'components/atoms'
+import React from 'react'
+import { Modal, Stepper } from 'components/atoms'
 // import * as yup from 'yup'
 import Phases from './phases'
 import { useStep } from 'hooks'

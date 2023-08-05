@@ -1,6 +1,7 @@
 'use client'
 import React, { useState } from 'react'
 import { cva, type VariantProps } from 'class-variance-authority'
+import cn from 'utils/mergeClasses'
 
 const InputStyle = cva('input', {
   variants: {
@@ -14,6 +15,7 @@ const InputStyle = cva('input', {
       sm: 'input-sm',
       md: 'input-md',
       lg: 'input-lg',
+      full: 'w-full',
     },
     color: {
       primary: 'input-primary',
@@ -36,6 +38,7 @@ type labelJustify = 'left' | 'right'
 interface Props extends VariantProps<typeof InputStyle>, Omit<React.ButtonHTMLAttributes<HTMLInputElement>, 'color'> {
   placeholder?: string
   value?: string
+  // eslint-disable-next-line no-unused-vars
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
   disabled?: boolean
   label?: string
@@ -64,7 +67,8 @@ function Input(props: Props) {
     onChange && onChange(e)
   }
   return (
-    <div className="form-control w-full max-w-xs">
+    // <div className="form-control w-full max-w-xs">
+    <>
       {labelPosition === 'top' && (
         <label className="label">
           <span className={labelJustify === 'left' ? 'label-text' : 'label-text-alt'}>{label}</span>
@@ -73,7 +77,7 @@ function Input(props: Props) {
       <input
         type="text"
         placeholder={placeholder}
-        className={InputStyle({ intent, size, color, className })}
+        className={cn(InputStyle({ intent, size, color }), className)}
         disabled={disabled}
         value={inputValue}
         onChange={handleChange}
@@ -84,7 +88,8 @@ function Input(props: Props) {
           <span className={labelJustify === 'left' ? 'label-text' : 'label-text-alt'}>{label}</span>
         </label>
       )}
-    </div>
+    </>
+    // </div>
   )
 }
 
