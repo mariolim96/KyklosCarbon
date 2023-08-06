@@ -11,9 +11,29 @@ import "@openzeppelin/contracts/security/Pausable.sol";
 // access control contract from openzeppelin
 import "@openzeppelin/contracts/access/AccessControl.sol";
 
-import "./ICarbonProject.sol";
-
 import "./CarbonProjectTypes.sol";
+
+// import "./ICarbonProjects.sol";
+
+interface ICarbonProjects is IERC721 {
+    function addNewProject(
+        address to,
+        string memory projectId,
+        string memory standard,
+        string memory methodology,
+        string memory region,
+        string memory storageMethod,
+        string memory method,
+        string memory emissionType,
+        string memory category,
+        string memory uri,
+        address beneficiary
+    ) external returns (uint256);
+
+    function isValidProjectTokenId(uint256 tokenId) external returns (bool);
+
+    function getProjectDataByTokenId(uint256 tokenId) external view returns (ProjectData memory);
+}
 
 contract CarbonProjectsStorage {
     uint128 public projectTokenCounter;
@@ -37,27 +57,37 @@ contract CarbonProjectsStorage {
     mapping(string => uint256) public pidToTokenId;
 }
 
-contract carbonProject is ICarbonProjects, Ownable, ERC721, CarbonProjectsStorage, Pausable, AccessControl {
+contract CarbonProject is ICarbonProjects, ERC721, CarbonProjectsStorage, Pausable, AccessControl, Ownable {
+    bytes32 public constant PAUSER_ROLE = keccak256("PAUSER_ROLE");
+    bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
     bytes32 public constant MANAGER_ROLE = keccak256("MANAGER_ROLE");
 
-    function pause() public onlyOwner {
+    constructor() ERC721("CarbonProject", "CPV") {
+        _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
+        _grantRole(PAUSER_ROLE, msg.sender);
+        _grantRole(MINTER_ROLE, msg.sender);
+    }
+
+    function pause() public onlyRole(PAUSER_ROLE) {
         _pause();
     }
 
-    function unpause() public onlyOwner {
+    function unpause() public onlyRole(PAUSER_ROLE) {
         _unpause();
+    }
+
+    function safeMint(address to, uint256 tokenId) public onlyRole(MINTER_ROLE) {
+        _safeMint(to, tokenId);
     }
 
     function _beforeTokenTransfer(address from, address to, uint256 tokenId, uint256 batchSize) internal override whenNotPaused {
         super._beforeTokenTransfer(from, to, tokenId, batchSize);
     }
 
-    constructor() ERC721("Carbon Project", "CARBON") {
-        _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
-        _grantRole(MANAGER_ROLE, msg.sender);
+    // The following functions are overrides required by Solidity.
+    function supportsInterface(bytes4 interfaceId) public view override(AccessControl, ERC721, IERC165) returns (bool) {
+        return super.supportsInterface(interfaceId);
     }
-
-    event ProjectMinted(address receiver, uint256 tokenId);
 
     modifier onlyManagers() {
         require(hasRole(MANAGER_ROLE, msg.sender) || owner() == msg.sender, "Caller is not authorized");
@@ -67,6 +97,11 @@ contract carbonProject is ICarbonProjects, Ownable, ERC721, CarbonProjectsStorag
     function setRegistry(address _address) external virtual onlyOwner {
         contractRegistry = _address;
     }
+
+    // events
+    event ProjectMinted(address receiver, uint256 tokenId);
+
+    // functions
 
     /// @notice Adds a new carbon project along with attributes/data
     /// @dev Projects can be added by data-managers
@@ -96,7 +131,7 @@ contract carbonProject is ICarbonProjects, Ownable, ERC721, CarbonProjectsStorag
 
         validProjectTokenIds[newItemId] = true;
 
-        _mint(to, newItemId);
+        safeMint(to, newItemId);
 
         projectData[newItemId].projectId = projectId;
         projectData[newItemId].standard = standard;
@@ -125,8 +160,4 @@ contract carbonProject is ICarbonProjects, Ownable, ERC721, CarbonProjectsStorag
     function isValidProjectTokenId(uint256 tokenId) external override returns (bool) {}
 
     function getProjectDataByTokenId(uint256 tokenId) external view override returns (ProjectData memory) {}
-
-    function supportsInterface(bytes4 interfaceId) public view override(AccessControl, ERC721) returns (bool) {
-        return interfaceId == type(ICarbonProjects).interfaceId || super.supportsInterface(interfaceId);
-    }
 }

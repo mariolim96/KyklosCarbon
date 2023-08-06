@@ -10,29 +10,8 @@ import "@openzeppelin/contracts/security/Pausable.sol";
 // access control contract from openzeppelin
 import "@openzeppelin/contracts/access/AccessControl.sol";
 
-interface ICarbonProjectVintages is IERC721 {
-    function addNewVintage(address to, VintageData memory _vintageData) external returns (uint256);
-
-    function getProjectVintageDataByTokenId(uint256 tokenId) external view returns (VintageData memory);
-
-    // function exists(uint256 tokenId) external view returns (bool);
-}
-
-struct VintageData {
-    /// @dev A human-readable string which differentiates this from other vintages in
-    /// the same project, and helps build the corresponding TCO2 name and symbol.
-    string name;
-    uint64 startTime; // UNIX timestamp
-    uint64 endTime; // UNIX timestamp
-    uint256 projectTokenId;
-    uint64 totalVintageQuantity;
-    bool isCorsiaCompliant;
-    bool isCCPcompliant;
-    string coBenefits;
-    string correspAdjustment;
-    string additionalCertification;
-    string uri;
-}
+import "./ICarbonProjectVintages.sol";
+import "./ICarbonProjectVintagesTypes.sol";
 
 contract CarbonProjectVintagesStorage {
     uint128 public projectVintageTokenCounter;
@@ -56,4 +35,81 @@ contract CarbonProjectVintagesStorage {
     /// project/vintage; only a long serial number containing info which allows
     /// that association.
     mapping(uint256 => mapping(uint64 => uint256)) public pvToTokenId;
+}
+
+contract ProjectVintages is ICarbonProjectVintages, ERC721, CarbonProjectVintagesStorage, Pausable, AccessControl, Ownable {
+    bytes32 public constant PAUSER_ROLE = keccak256("PAUSER_ROLE");
+    bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
+    bytes32 public constant MANAGER_ROLE = keccak256("MANAGER_ROLE");
+
+    constructor() ERC721("ProjectVintages", "PVN") {
+        _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
+        _grantRole(PAUSER_ROLE, msg.sender);
+        _grantRole(MINTER_ROLE, msg.sender);
+        _grantRole(MANAGER_ROLE, msg.sender);
+    }
+
+    function pause() public onlyRole(PAUSER_ROLE) {
+        _pause();
+    }
+
+    function unpause() public onlyRole(PAUSER_ROLE) {
+        _unpause();
+    }
+
+    function safeMint(address to, uint256 tokenId) public onlyRole(MINTER_ROLE) {
+        _safeMint(to, tokenId);
+    }
+
+    function setRegistry(address _address) external virtual onlyOwner {
+        contractRegistry = _address;
+    }
+
+    function _beforeTokenTransfer(address from, address to, uint256 tokenId, uint256 batchSize) internal override whenNotPaused {
+        super._beforeTokenTransfer(from, to, tokenId, batchSize);
+    }
+
+    // The following functions are overrides required by Solidity.
+
+    function supportsInterface(bytes4 interfaceId) public view override(AccessControl, ERC721, IERC165) returns (bool) {
+        return super.supportsInterface(interfaceId);
+    }
+
+    function exists(uint256 tokenId) public view returns (bool) {
+        return _exists(tokenId);
+    }
+
+    // events
+    event ProjectVintageMinted(address receiver, uint256 tokenId, uint256 projectTokenId, uint64 startTime);
+
+    function addNewVintage(address to, VintageData memory _vintageData) external virtual onlyRole(MANAGER_ROLE) whenNotPaused returns (uint256) {
+        // checkProjectTokenExists(contractRegistry, _vintageData.projectTokenId);
+        // verify it projectTokenId already exists
+        require(exists(_vintageData.projectTokenId), "Error: projectTokenId does not exist");
+        require(pvToTokenId[_vintageData.projectTokenId][_vintageData.startTime] == 0, "Error: vintage already added");
+
+        require(_vintageData.startTime < _vintageData.endTime, "Error: vintage startTime must be less than endTime");
+
+        /// @dev Increase `projectVintageTokenCounter` and mark current Id as valid
+        uint256 newItemId = projectVintageTokenCounter;
+        unchecked {
+            ++newItemId;
+            ++totalSupply;
+        }
+        projectVintageTokenCounter = uint128(newItemId);
+
+        validProjectVintageIds[newItemId] = true;
+
+        _mint(to, newItemId);
+
+        vintageData[newItemId] = _vintageData;
+        emit ProjectVintageMinted(to, newItemId, _vintageData.projectTokenId, _vintageData.startTime);
+        pvToTokenId[_vintageData.projectTokenId][_vintageData.startTime] = newItemId;
+
+        return newItemId;
+    }
+
+    function getProjectVintageDataByTokenId(uint256 tokenId) external view virtual override returns (VintageData memory) {
+        return (vintageData[tokenId]);
+    }
 }
