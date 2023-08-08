@@ -1,0 +1,365 @@
+@startuml
+!theme carbon-gray
+class Ownable {
+    ' -- inheritance --
+	{abstract}Context
+
+    ' -- usingFor --
+
+    ' -- vars --
+	-[[address]] _owner
+
+    ' -- methods --
+	+**__constructor__**()
+	+🔍owner()
+	#🔍_checkOwner()
+	+renounceOwnership()
+	+transferOwnership()
+	#_transferOwnership()
+
+}
+' -- inheritance / usingFor --
+Ownable --[#DarkGoldenRod]|> Context
+class AccessControl {
+    ' -- inheritance --
+	{abstract}Context
+	{abstract}IAccessControl
+	{abstract}ERC165
+
+    ' -- usingFor --
+
+    ' -- vars --
+	-[[mapping bytes32=>RoleData ]] _roles
+	+{static}[[bytes32]] DEFAULT_ADMIN_ROLE
+
+    ' -- methods --
+	+🔍supportsInterface()
+	+🔍hasRole()
+	#🔍_checkRole()
+	#🔍_checkRole()
+	+🔍getRoleAdmin()
+	+grantRole()
+	+revokeRole()
+	+renounceRole()
+	#_setupRole()
+	#_setRoleAdmin()
+	#_grantRole()
+	#_revokeRole()
+
+}
+' -- inheritance / usingFor --
+AccessControl --[#DarkGoldenRod]|> Context
+AccessControl --[#DarkGoldenRod]|> IAccessControl
+AccessControl --[#DarkGoldenRod]|> ERC165
+
+
+class Pausable {
+    ' -- inheritance --
+	{abstract}Context
+
+    ' -- usingFor --
+
+    ' -- vars --
+	-[[bool]] _paused
+
+    ' -- methods --
+	+**__constructor__**()
+	+🔍paused()
+	#🔍_requireNotPaused()
+	#🔍_requirePaused()
+	#_pause()
+	#_unpause()
+
+}
+' -- inheritance / usingFor --
+Pausable --[#DarkGoldenRod]|> Context
+
+class ERC721 {
+    ' -- inheritance --
+	{abstract}Context
+	{abstract}ERC165
+	{abstract}IERC721
+	{abstract}IERC721Metadata
+
+    ' -- usingFor --
+	{abstract}📚Address for [[address]]
+	{abstract}📚Strings for [[uint256]]
+
+    ' -- vars --
+	-[[string]] _name
+	-[[string]] _symbol
+	-[[mapping uint256=>address ]] _owners
+	-[[mapping address=>uint256 ]] _balances
+	-[[mapping uint256=>address ]] _tokenApprovals
+	-[[mapping address=>mapping address=>bool  ]] _operatorApprovals
+
+    ' -- methods --
+	+**__constructor__**()
+	+🔍supportsInterface()
+	+🔍balanceOf()
+	+🔍ownerOf()
+	+🔍name()
+	+🔍symbol()
+	+🔍tokenURI()
+	#🔍_baseURI()
+	+approve()
+	+🔍getApproved()
+	+setApprovalForAll()
+	+🔍isApprovedForAll()
+	+transferFrom()
+	+safeTransferFrom()
+	+safeTransferFrom()
+	#_safeTransfer()
+	#🔍_ownerOf()
+	#🔍_exists()
+	#🔍_isApprovedOrOwner()
+	#_safeMint()
+	#_safeMint()
+	#_mint()
+	#_burn()
+	#_transfer()
+	#_approve()
+	#_setApprovalForAll()
+	#🔍_requireMinted()
+	-_checkOnERC721Received()
+	#_beforeTokenTransfer()
+	#_afterTokenTransfer()
+	#__unsafe_increaseBalance()
+
+}
+' -- inheritance / usingFor --
+ERC721 --[#DarkGoldenRod]|> Context
+ERC721 --[#DarkGoldenRod]|> ERC165
+ERC721 --[#DarkGoldenRod]|> IERC721
+ERC721 --[#DarkGoldenRod]|> IERC721Metadata
+ERC721 ..[#DarkOliveGreen]|> Address : //for address//
+ERC721 ..[#DarkOliveGreen]|> Strings : //for uint256//
+
+
+class Registry {
+    ' -- inheritance --
+	{abstract}IRegistry
+
+    ' -- usingFor --
+
+    ' -- vars --
+	#[[address]] _carbonProjectAddress
+	#[[address]] _carbonProjectVintagesAddress
+	#[[address]] _kyklosTokenAddress
+	#[[address]] _KyklosTokenFactoryAddress
+	#[[address]] _retirementCertificatesAddress
+	+[[mapping address=>bool ]] projectVintageERC20Registry
+
+    ' -- methods --
+	+setCarbonProjectAddress()
+	+🔍getCarbonProjectAddress()
+	+setCarbonProjectVintagesAddress()
+	+🔍getCarbonProjectVintagesAddress()
+	+setKyklosTokenAddress()
+	+🔍getKyklosTokenAddress()
+	+setKyklosTokenFactoryAddress()
+	+🔍getKyklosTokenFactoryAddress()
+	+setRetirementCertificatesAddress()
+	+🔍getRetirementCertificatesAddress()
+	+setProjectVintageERC20Registry()
+	+🔍getProjectVintageERC20Registry()
+
+}
+' -- inheritance / usingFor --
+Registry --[#DarkGoldenRod]|> IRegistry
+
+class CarbonProjectsStorage {
+    ' -- inheritance --
+
+    ' -- usingFor --
+
+    ' -- vars --
+	+[[uint128]] projectTokenCounter
+	+[[uint128]] totalSupply
+	+[[address]] contractRegistry
+	+[[string]] baseURI
+	+[[mapping uint256=>ProjectData ]] projectData
+	+[[mapping string=>bool ]] projectIds
+	+[[mapping uint256=>bool ]] validProjectTokenIds
+	+[[mapping string=>uint256 ]] pidToTokenId
+
+    ' -- methods --
+
+}
+' -- inheritance / usingFor --
+
+class CarbonProject {
+    ' -- inheritance --
+	{abstract}ICarbonProjects
+	{abstract}ERC721
+	{abstract}CarbonProjectsStorage
+	{abstract}Pausable
+	{abstract}AccessControl
+	{abstract}Ownable
+
+    ' -- usingFor --
+
+    ' -- vars --
+	+{static}[[bytes32]] PAUSER_ROLE
+	+{static}[[bytes32]] MINTER_ROLE
+	+{static}[[bytes32]] MANAGER_ROLE
+
+    ' -- methods --
+	+**__constructor__**()
+	+pause()
+	+unpause()
+	+safeMint()
+	#_beforeTokenTransfer()
+	+🔍supportsInterface()
+	+setRegistry()
+	+addNewProject()
+	#🔍memcmp()
+	#🔍strcmp()
+	+isValidProjectTokenId()
+	+🔍getProjectDataByTokenId()
+
+}
+' -- inheritance / usingFor --
+CarbonProject --[#DarkGoldenRod]|> ICarbonProjects
+CarbonProject --[#DarkGoldenRod]|> ERC721
+CarbonProject --[#DarkGoldenRod]|> CarbonProjectsStorage
+CarbonProject --[#DarkGoldenRod]|> Pausable
+CarbonProject --[#DarkGoldenRod]|> AccessControl
+CarbonProject --[#DarkGoldenRod]|> Ownable
+
+class CarbonProjectVintagesStorage {
+    ' -- inheritance --
+
+    ' -- usingFor --
+
+    ' -- vars --
+	+[[uint128]] projectVintageTokenCounter
+	+[[uint128]] totalSupply
+	+[[address]] contractRegistry
+	+[[string]] baseURI
+	+[[mapping uint256=>VintageData ]] vintageData
+	+[[mapping uint256=>bool ]] isRetired
+	+[[mapping uint256=>bool ]] validProjectVintageIds
+	+[[mapping uint256=>mapping uint64=>uint256  ]] pvToTokenId
+
+    ' -- methods --
+
+}
+
+
+class ProjectVintages {
+    ' -- inheritance --
+	{abstract}IProjectVintages
+	{abstract}ERC721
+	{abstract}CarbonProjectVintagesStorage
+	{abstract}Pausable
+	{abstract}AccessControl
+	{abstract}Ownable
+
+    ' -- usingFor --
+
+    ' -- vars --
+	+{static}[[bytes32]] PAUSER_ROLE
+	+{static}[[bytes32]] MINTER_ROLE
+	+{static}[[bytes32]] MANAGER_ROLE
+
+    ' -- methods --
+	+**__constructor__**()
+	+pause()
+	+unpause()
+	+safeMint()
+	+setRegistry()
+	#_beforeTokenTransfer()
+	+🔍supportsInterface()
+	+🔍exists()
+	+addNewVintage()
+	+setRetirementStatus()
+	+🔍getProjectVintageDataByTokenId()
+	+🔍getVintageData()
+	+fractionalize()
+
+}
+' -- inheritance / usingFor --
+ProjectVintages --[#DarkGoldenRod]|> IProjectVintages
+ProjectVintages --[#DarkGoldenRod]|> ERC721
+ProjectVintages --[#DarkGoldenRod]|> CarbonProjectVintagesStorage
+ProjectVintages --[#DarkGoldenRod]|> Pausable
+ProjectVintages --[#DarkGoldenRod]|> AccessControl
+ProjectVintages --[#DarkGoldenRod]|> Ownable
+
+
+class KyklosTokenFactoryStorage {
+    ' -- inheritance --
+
+    ' -- usingFor --
+
+    ' -- vars --
+	+[[address]] contractRegistry
+	+[[address]] beacon
+	+[[address]] deployedContracts
+	+[[mapping uint256=>address ]] projectVintageToErc20
+	+[[address]] bridgeFeeReceiver
+	+[[uint256]] bridgeFeePercentageInBase
+	+[[address]] bridgeFeeBurnAddress
+	+[[uint256]] bridgeFeeBurnPercentageInBase
+	+[[uint256]] totalRetired
+
+    ' -- methods --
+
+}
+
+class KyklosTokenFactory {
+    ' -- inheritance --
+	{abstract}IKyklosTokenFactory
+	{abstract}KyklosTokenFactoryStorage
+	{abstract}Ownable
+	{abstract}Pausable
+
+    ' -- usingFor --
+
+    ' -- vars --
+
+    ' -- methods --
+	+**__constructor__**()
+	+setRegistry()
+	+setBridgeFeeReceiver()
+	+setBridgeFeePercentageInBase()
+	+setBridgeFeeBurnAddress()
+	+setBridgeFeeBurnPercentageInBase()
+	+pause()
+	+unpause()
+	#🔍checkExistence()
+	+🔍getProjectVintageToErc20()
+	+createToken()
+	+increaseTotalRetired()
+
+}
+' -- inheritance / usingFor --
+KyklosTokenFactory --[#DarkGoldenRod]|> IKyklosTokenFactory
+KyklosTokenFactory --[#DarkGoldenRod]|> KyklosTokenFactoryStorage
+KyklosTokenFactory --[#DarkGoldenRod]|> Ownable
+KyklosTokenFactory --[#DarkGoldenRod]|> Pausable
+
+
+
+class KyklosToken {
+    ' -- inheritance --
+	{abstract}KyklosTokenStorage
+	{abstract}ERC20
+	{abstract}IERC721Receiver
+
+    ' -- usingFor --
+
+    ' -- vars --
+
+    ' -- methods --
+	+**__constructor__**()
+	+onERC721Received()
+
+}
+' -- inheritance / usingFor --
+KyklosToken --[#DarkGoldenRod]|> KyklosTokenStorage
+KyklosToken --[#DarkGoldenRod]|> ERC20
+KyklosToken --[#DarkGoldenRod]|> IERC721Receiver
+
+@enduml

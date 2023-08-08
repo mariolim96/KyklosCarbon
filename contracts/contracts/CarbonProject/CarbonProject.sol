@@ -13,27 +13,7 @@ import "@openzeppelin/contracts/access/AccessControl.sol";
 
 import "./CarbonProjectTypes.sol";
 
-// import "./ICarbonProjects.sol";
-
-interface ICarbonProjects is IERC721 {
-    function addNewProject(
-        address to,
-        string memory projectId,
-        string memory standard,
-        string memory methodology,
-        string memory region,
-        string memory storageMethod,
-        string memory method,
-        string memory emissionType,
-        string memory category,
-        string memory uri,
-        address beneficiary
-    ) external returns (uint256);
-
-    function isValidProjectTokenId(uint256 tokenId) external returns (bool);
-
-    function getProjectDataByTokenId(uint256 tokenId) external view returns (ProjectData memory);
-}
+import "../../interfaces/ICarbonProjects.sol";
 
 contract CarbonProjectsStorage {
     uint128 public projectTokenCounter;
@@ -46,7 +26,6 @@ contract CarbonProjectsStorage {
 
     /// @dev uniqueness check for globalUniqueIdentifier strings
     /// Example: `'VCS-01468' -> true`
-    /// Todo: assess if can be deprecated
     mapping(string => bool) public projectIds;
 
     /// @dev mapping to identify invalid projectTokenIds
@@ -98,10 +77,16 @@ contract CarbonProject is ICarbonProjects, ERC721, CarbonProjectsStorage, Pausab
         contractRegistry = _address;
     }
 
+    function existProjectId(string memory projectId) external view virtual override returns (bool) {
+        return projectIds[projectId];
+    }
+
+    function isValidProjectTokenId(uint256 tokenId) external view virtual returns (bool) {
+        return validProjectTokenIds[tokenId];
+    }
+
     // events
     event ProjectMinted(address receiver, uint256 tokenId);
-
-    // functions
 
     /// @notice Adds a new carbon project along with attributes/data
     /// @dev Projects can be added by data-managers
@@ -119,7 +104,7 @@ contract CarbonProject is ICarbonProjects, ERC721, CarbonProjectsStorage, Pausab
         address beneficiary
     ) external virtual override onlyManagers whenNotPaused returns (uint256) {
         require(!strcmp(projectId, ""), "ProjectId cannot be empty");
-        require(!projectIds[projectId], "Project already exists");
+        require(!projectIds[projectId], "Already existing projectId");
         projectIds[projectId] = true;
 
         uint256 newItemId = projectTokenCounter;
@@ -156,8 +141,6 @@ contract CarbonProject is ICarbonProjects, ERC721, CarbonProjectsStorage, Pausab
     function strcmp(string memory a, string memory b) internal pure returns (bool) {
         return memcmp(bytes(a), bytes(b));
     }
-
-    function isValidProjectTokenId(uint256 tokenId) external override returns (bool) {}
 
     function getProjectDataByTokenId(uint256 tokenId) external view override returns (ProjectData memory) {}
 }
