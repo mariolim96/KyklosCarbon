@@ -15,4 +15,6 @@ interface IKyklosTokenFactory {
 
     // function owner() external view returns (address);
     function getProjectVintageToErc20(uint256 projectVintageTokenId) external view returns (address);
+
+    function createToken(uint256 _vintageTokenId) external returns (address);
 }

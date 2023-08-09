@@ -3,9 +3,11 @@
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/security/Pausable.sol";
 import "@openzeppelin/contracts/proxy/beacon/BeaconProxy.sol";
-
+import "@openzeppelin/contracts/proxy/beacon/IBeacon.sol";
 import "../../interfaces/IRegistry.sol";
 import "../../interfaces/IKyklosTokenFactory.sol";
+
+import "../Token/KyklosToken.sol";
 pragma solidity 0.8.18;
 
 abstract contract KyklosTokenFactoryStorage {
@@ -24,7 +26,7 @@ abstract contract KyklosTokenFactoryStorage {
     uint256 public totalRetired; // total amount of tokens retired
 }
 
-contract KyklosTokenFactory is IKyklosTokenFactory, KyklosTokenFactoryStorage, Ownable, Pausable {
+contract KyklosTokenFactory is IKyklosTokenFactory, KyklosTokenFactoryStorage, IBeacon, Ownable, Pausable {
     constructor(address _contractRegistry, address _beacon) {
         contractRegistry = _contractRegistry;
         beacon = _beacon;
@@ -87,7 +89,7 @@ contract KyklosTokenFactory is IKyklosTokenFactory, KyklosTokenFactoryStorage, O
     }
 
     // function that create a new token using the proxy pattern
-    function createToken(uint256 _vintageTokenId) external onlyRegistry whenNotPaused {
+    function createToken2(uint256 _vintageTokenId) external onlyRegistry whenNotPaused returns (address tokenAddress) {
         require(beacon != address(0), "Error: Beacon for proxy not set");
         require(!checkExistence(_vintageTokenId), "pvERC20 already exists");
         string memory signature = "initialize(string,string,uint256,address)";
@@ -101,6 +103,16 @@ contract KyklosTokenFactory is IKyklosTokenFactory, KyklosTokenFactoryStorage, O
         projectVintageToErc20[_vintageTokenId] = address(proxyKT);
 
         emit TokenCreated(_vintageTokenId, address(proxyKT));
+        return address(proxyKT);
+    }
+
+    function createToken(uint256 _vintageTokenId) external override returns (address) {
+        KyklosToken token = new KyklosToken(contractRegistry, _vintageTokenId);
+        IRegistry(contractRegistry).setProjectVintageERC20Registry(address(token), true);
+        deployedContracts.push(address(token));
+        projectVintageToErc20[_vintageTokenId] = address(token);
+        emit TokenCreated(_vintageTokenId, address(token));
+        return address(token);
     }
 
     // ----------------------------------------
@@ -108,5 +120,9 @@ contract KyklosTokenFactory is IKyklosTokenFactory, KyklosTokenFactoryStorage, O
     // ----------------------------------------
     function increaseTotalRetired(uint256 amount) external override {
         totalRetired += amount;
+    }
+
+    function implementation() external view override returns (address) {
+        return beacon;
     }
 }

@@ -9,7 +9,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/security/Pausable.sol";
 // access control contract from openzeppelin
 import "@openzeppelin/contracts/access/AccessControl.sol";
-
+import "hardhat/console.sol";
 import "../../interfaces/IProjectVintages.sol";
 import "./IProjectVintagesTypes.sol";
 import "../../interfaces/IRegistry.sol";
@@ -91,6 +91,7 @@ contract ProjectVintages is IProjectVintages, ERC721, CarbonProjectVintagesStora
         bool projectTokenExists = ICarbonProjects(IRegistry(contractRegistry).getCarbonProjectAddress()).isValidProjectTokenId(
             _vintageData.projectTokenId
         );
+        console.log("projectTokenExists: ", projectTokenExists);
         require(projectTokenExists, "Error: projectTokenId does not exist");
         // verify that this vintage does not already exist
         require(pvToTokenId[_vintageData.projectTokenId][_vintageData.startTime] == 0, "Error: vintage already added");
@@ -130,23 +131,13 @@ contract ProjectVintages is IProjectVintages, ERC721, CarbonProjectVintagesStora
         return (vintageData[tokenId]);
     }
 
-    // check if project exist using registry
-    // function checkProjectTokenExists(address _contractRegistry, uint256 _projectTokenId) internal view virtual {
-    //     IRegistry registry = IRegistry(_contractRegistry);
-
-    //     // require(registry.projectTokenExists(_projectTokenId), "Error: projectTokenId does not exist");
-    // }
-
     /// @notice function that automatically  convert  project vintage nft into token using token factory
     function fractionalize(uint256 tokenId) external virtual {
-        // require(
-        //     _isApprovedOrOwner(_msgSender(), tokenId),
-        //     'ERC721: transfer caller is not owner nor approved'
-        // );
+        require(_isApprovedOrOwner(_msgSender(), tokenId), "ERC721: transfer caller is not owner nor approved");
 
         address ERC20Factory = IRegistry(contractRegistry).getKyklosTokenFactoryAddress();
         uint256 pvId = vintageData[tokenId].projectTokenId;
-        address pvERC20 = IKyklosTokenFactory(ERC20Factory).getProjectVintageToErc20(pvId);
+        address pvERC20 = IKyklosTokenFactory(ERC20Factory).createToken(tokenId);
 
         safeTransferFrom(_msgSender(), pvERC20, tokenId, "");
     }

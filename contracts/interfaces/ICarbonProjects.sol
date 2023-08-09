@@ -24,4 +24,6 @@ interface ICarbonProjects is IERC721 {
     function getProjectDataByTokenId(uint256 tokenId) external view returns (ProjectData memory);
 
     function existProjectId(string memory projectId) external view returns (bool);
+
+    function getPidToTokenId(string memory projectId) external view returns (uint256);
 }

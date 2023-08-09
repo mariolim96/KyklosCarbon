@@ -5,10 +5,10 @@
   "scripts": {
     "node": "npx hardhat node",
     "build": "hardhat compile",
-    "deploy": "npx hardhat run scripts/deployV1.ts --network localhost",
+    "deploy": "npx hardhat run scripts/deployV2.ts --network localhost",
     "deploy:nft": "npx hardhat run scripts/nft.ts",
     "coverage": "hardhat coverage",
-    "test": "REPORT_GAS=true hardhat test"
+    "test": "npx hardhat test"
   },
   "devDependencies": {
     "@ethersproject/abi": "^5.4.7",

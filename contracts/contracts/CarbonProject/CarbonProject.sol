@@ -10,10 +10,9 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/security/Pausable.sol";
 // access control contract from openzeppelin
 import "@openzeppelin/contracts/access/AccessControl.sol";
-
 import "./CarbonProjectTypes.sol";
-
 import "../../interfaces/ICarbonProjects.sol";
+import "hardhat/console.sol";
 
 contract CarbonProjectsStorage {
     uint128 public projectTokenCounter;
@@ -73,6 +72,7 @@ contract CarbonProject is ICarbonProjects, ERC721, CarbonProjectsStorage, Pausab
         _;
     }
 
+    // getter and setter functions
     function setRegistry(address _address) external virtual onlyOwner {
         contractRegistry = _address;
     }
@@ -83,6 +83,14 @@ contract CarbonProject is ICarbonProjects, ERC721, CarbonProjectsStorage, Pausab
 
     function isValidProjectTokenId(uint256 tokenId) external view virtual returns (bool) {
         return validProjectTokenIds[tokenId];
+    }
+
+    function getProjectDataByTokenId(uint256 tokenId) external view override returns (ProjectData memory) {
+        return projectData[tokenId];
+    }
+
+    function getPidToTokenId(string memory projectId) external view override returns (uint256) {
+        return pidToTokenId[projectId];
     }
 
     // events
@@ -141,6 +149,4 @@ contract CarbonProject is ICarbonProjects, ERC721, CarbonProjectsStorage, Pausab
     function strcmp(string memory a, string memory b) internal pure returns (bool) {
         return memcmp(bytes(a), bytes(b));
     }
-
-    function getProjectDataByTokenId(uint256 tokenId) external view override returns (ProjectData memory) {}
 }

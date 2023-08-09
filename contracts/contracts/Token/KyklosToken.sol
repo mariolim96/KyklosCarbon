@@ -34,7 +34,10 @@ contract KyklosTokenStorage {
 }
 
 contract KyklosToken is KyklosTokenStorage, ERC20, IERC721Receiver {
-    constructor(address _contractRegistry, uint256 _projectVintageTokenId) ERC20("KyklosToken", "KYKLOS") {
+    constructor(
+        address _contractRegistry,
+        uint256 _projectVintageTokenId
+    ) ERC20("KyklosToken", "KYKLOS") {
         contractRegistry = _contractRegistry;
         projectVintageTokenId = _projectVintageTokenId;
     }
@@ -56,11 +59,18 @@ contract KyklosToken is KyklosTokenStorage, ERC20, IERC721Receiver {
     // function name() public view virtual override returns (string memory) {
 
     /// @notice receive hook to fractionalize vintages into erc20 tokens
-    function onERC721Received(address operator, address from, uint256 tokenId, bytes calldata data) external override returns (bytes4) {
-        VintageData memory vintageData = IProjectVintages(IRegistry(contractRegistry).getCarbonProjectVintagesAddress())
-            .getProjectVintageDataByTokenId(tokenId);
+    function onERC721Received(
+        address,
+        address from,
+        uint256 tokenId,
+        bytes calldata
+    ) external override returns (bytes4) {
+        VintageData memory vintageData = IProjectVintages(
+            IRegistry(contractRegistry).getCarbonProjectVintagesAddress()
+        ).getProjectVintageDataByTokenId(tokenId);
         minterToId[from] = tokenId;
         uint256 quantity = vintageData.totalVintageQuantity * 10 ** decimals();
         _mint(from, quantity);
+        return this.onERC721Received.selector;
     }
 }
